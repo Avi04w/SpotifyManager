@@ -8,14 +8,16 @@ public class Track {
     private String id;
     private String name;
     private String uri;
+    private boolean is_playable;
 
-    public Track(ArrayList<Artist> artists, int duration_ms, boolean isExplicit, String id, String name, String uri) {
+    public Track(ArrayList<Artist> artists, int duration_ms, boolean isExplicit, String id, String name, String uri, boolean is_playable) {
         this.artists = artists;
         this.duration_ms = duration_ms;
         this.explicit = isExplicit;
         this.id = id;
         this.name = name;
         this.uri = uri;
+        this.is_playable = is_playable;
     }
 
     public static TrackBuilder builder() {
@@ -29,6 +31,7 @@ public class Track {
         private String id;
         private String name;
         private String uri;
+        private boolean is_playable;
 
         TrackBuilder() {
         }
@@ -63,8 +66,13 @@ public class Track {
             return this;
         }
 
+        public TrackBuilder is_playable(boolean is_playable) {
+            this.is_playable = is_playable;
+            return this;
+        }
+
         public Track build() {
-            return new Track(artists, duration_ms, explicit, id, name, uri);
+            return new Track(artists, duration_ms, explicit, id, name, uri, is_playable);
         }
     }
 
@@ -81,6 +89,7 @@ public class Track {
                 ", id=" + id + '\'' +
                 ", trackName='" + name + '\'' +
                 ", uri=" + uri + '\'' +
+                ", is_playable=" + Boolean.toString(is_playable) + '\'' +
                 '}';
     }
 
@@ -95,4 +104,6 @@ public class Track {
     public String getName() { return name; }
 
     public String getUri() { return uri; }
+
+    public boolean isPlayable() { return is_playable; }
 }
