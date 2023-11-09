@@ -24,6 +24,68 @@ public class Player {
         this.href = href;
     }
 
+    public static PlayerBuilder builder() {
+        return new PlayerBuilder();
+    }
+
+    public static class PlayerBuilder {
+        private String name;
+        private boolean isPlaying;
+        private Album album;
+        private ArrayList<Artist> artists;
+        private int trackLength;
+        private boolean explicit;
+        private String trackId;
+        private String href;
+
+        PlayerBuilder() {
+        }
+
+        public PlayerBuilder name(String name) {
+            this.name = name;
+            return this;
+        }
+
+        public PlayerBuilder isPlaying(boolean isPlaying) {
+            this.isPlaying = isPlaying;
+            return this;
+        }
+
+        public PlayerBuilder album(Album album){
+            this.album = album;
+            return this;
+        }
+
+        public PlayerBuilder artists(ArrayList<Artist> artists){
+            this.artists = artists;
+            return this;
+        }
+
+        public PlayerBuilder trackLength(int trackLength){
+            this.trackLength = trackLength;
+            return this;
+        }
+
+        public PlayerBuilder explicit(boolean explicit){
+            this.explicit = explicit;
+            return this;
+        }
+
+        public PlayerBuilder trackId(String trackId){
+            this.trackId = trackId;
+            return this;
+        }
+
+        public PlayerBuilder href(String href) {
+            this.href = href;
+            return this;
+        }
+
+        public Player build() {
+            return new Player(name, isPlaying, album, artists, trackLength, explicit, trackId, href);
+        }
+    }
+
     public String getName() {
         return name;
     }
