@@ -1,24 +1,30 @@
 package entity;
 
 import javax.sound.midi.Track;
+import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Objects;
 
 public class Album {
     private String albumID;
     private String albumName;
     private String albumURI;
+    private ArrayList<Artist> artists;
     private String albumType;
+    private ArrayList<Objects> image;
     private int totalTracks;
     private ArrayList<Track> albumTracks;
     private ArrayList<String> albumGenres;
     private int albumPopularity;
 
-    public Album(String albumID, String albumName, String albumURI, String albumType, int totalTracks, ArrayList<Track> albumTracks, ArrayList<String> albumGenres, int albumPopularity) {
+    public Album(String albumID, String albumName, String albumURI, ArrayList<Artist> artists, String albumType, ArrayList<Objects> image, int totalTracks, ArrayList<Track> albumTracks, ArrayList<String> albumGenres, int albumPopularity) {
         this.albumID = albumID;
         this.albumName = albumName;
         this.albumURI = albumURI;
+        this.artists = artists;
         this.albumType = albumType;
+        this.image = image;
         this.totalTracks = totalTracks;
         this.albumTracks = albumTracks;
         this.albumGenres = albumGenres;
@@ -33,7 +39,9 @@ public class Album {
         private String albumID;
         private String albumName;
         private String albumURI;
+        private ArrayList<Artist> artists;
         private String albumType;
+        private ArrayList<Objects> image;
         private int totalTracks;
         private ArrayList<Track> albumTracks;
         private ArrayList<String> albumGenres;
@@ -53,8 +61,16 @@ public class Album {
             this.albumURI = albumURI;
             return this;
         }
+        public AlbumBuilder setArtists(ArrayList<Artist> artists){
+            this.artists = artists;
+            return this;
+        }
         public AlbumBuilder setAlbumType(String albumType){
             this.albumType = albumType;
+            return this;
+        }
+        public AlbumBuilder setImage(ArrayList<Objects> image){
+            this.image = image;
             return this;
         }
         public AlbumBuilder setTotalTracks(int totalTracks){
@@ -78,7 +94,9 @@ public class Album {
     public String getAlbumID() { return albumID; }
     public String getAlbumName() { return albumName; }
     public String getAlbumURI() { return albumURI; }
+    public ArrayList<Artist> getArtists() { return artists; }
     public String getAlbumType() { return albumType; }
+    public ArrayList<Objects> getImage() { return image; }
     public int getTotalTracks() { return totalTracks; }
 
     public ArrayList<Track> getAlbumTracks() { return albumTracks; }
