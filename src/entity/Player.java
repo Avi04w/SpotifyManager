@@ -5,23 +5,14 @@ import java.util.ArrayList;
 public class Player {
     private String name;
     private boolean isPlaying;
-    private Album album;
-    private ArrayList<Artist> artists;
-    private int trackLength;
-    private boolean explicit;
-    private String trackId;
-    private String href;
+    private Track track;
+    private int progress;
 
-    public Player(String name, boolean isPlaying, Album album, ArrayList<Artist> artists, int trackLength,
-                  boolean explicit, String trackId, String href) {
+    public Player(String name, boolean isPlaying, Track track, int progress) {
         this.name = name;
         this.isPlaying = isPlaying;
-        this.album = album;
-        this.artists = artists;
-        this.trackLength = trackLength;
-        this.explicit = explicit;
-        this.trackId = trackId;
-        this.href = href;
+        this.track = track;
+        this.progress = progress;
     }
 
     public static PlayerBuilder builder() {
@@ -31,12 +22,8 @@ public class Player {
     public static class PlayerBuilder {
         private String name;
         private boolean isPlaying;
-        private Album album;
-        private ArrayList<Artist> artists;
-        private int trackLength;
-        private boolean explicit;
-        private String trackId;
-        private String href;
+        private Track track;
+        private int progress;
 
         PlayerBuilder() {
         }
@@ -51,38 +38,18 @@ public class Player {
             return this;
         }
 
-        public PlayerBuilder album(Album album){
-            this.album = album;
+        public PlayerBuilder track(Track track){
+            this.track = track;
             return this;
         }
 
-        public PlayerBuilder artists(ArrayList<Artist> artists){
-            this.artists = artists;
-            return this;
-        }
-
-        public PlayerBuilder trackLength(int trackLength){
-            this.trackLength = trackLength;
-            return this;
-        }
-
-        public PlayerBuilder explicit(boolean explicit){
-            this.explicit = explicit;
-            return this;
-        }
-
-        public PlayerBuilder trackId(String trackId){
-            this.trackId = trackId;
-            return this;
-        }
-
-        public PlayerBuilder href(String href) {
-            this.href = href;
+        public PlayerBuilder progress(int progress) {
+            this.progress = progress;
             return this;
         }
 
         public Player build() {
-            return new Player(name, isPlaying, album, artists, trackLength, explicit, trackId, href);
+            return new Player(name, isPlaying, track, progress);
         }
     }
 
@@ -94,38 +61,16 @@ public class Player {
         return isPlaying;
     }
 
-    public Album getAlbum() {
-        return album;
-    }
-
-    public ArrayList<Artist> getArtists() {
-        return artists;
-    }
-
-    public int getTrackLength() {
-        return trackLength;
-    }
-
-    public boolean isExplicit() {
-        return explicit;
-    }
-
-    public String getTrackId() {
-        return trackId;
-    }
-
-    public String getHref(){
-        return href;
+    public int getProgress() {
+        return progress;
     }
 
     @Override
     public String toString() {
         return "Player{" +
                 "trackName='" + name +
-                ", artists='" + artists.toString() +
-                ", album=" + album.toString() +
-                ", trackLength=" + trackLength +
                 ", isPlaying=" + isPlaying +
+                ", progress=" + progress +
                 '}';
     }
 }
