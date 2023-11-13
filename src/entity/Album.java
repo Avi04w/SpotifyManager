@@ -7,28 +7,28 @@ import java.util.Arrays;
 import java.util.Objects;
 
 public class Album {
-    private String albumID;
-    private String albumName;
-    private String albumURI;
+    private String name;
+    private String id;
+    private String uri;
     private ArrayList<Artist> artists;
-    private String albumType;
+    private String type;
     private ArrayList<String> image;
     private int totalTracks;
-    private ArrayList<Track> albumTracks;
-    private ArrayList<String> albumGenres;
-    private int albumPopularity;
+    private ArrayList<Track> tracks;
+    private ArrayList<String> genres;
+    private int popularity;
 
-    public Album(String albumID, String albumName, String albumURI, ArrayList<Artist> artists, String albumType, ArrayList<String> image, int totalTracks, ArrayList<Track> albumTracks, ArrayList<String> albumGenres, int albumPopularity) {
-        this.albumID = albumID;
-        this.albumName = albumName;
-        this.albumURI = albumURI;
+    public Album(String name, String id, String uri, ArrayList<Artist> artists, String type, ArrayList<String> image, int totalTracks, ArrayList<Track> tracks, ArrayList<String> genres, int popularity) {
+        this.name = name;
+        this.id = id;
+        this.uri = uri;
         this.artists = artists;
-        this.albumType = albumType;
+        this.type = type;
         this.image = image;
         this.totalTracks = totalTracks;
-        this.albumTracks = albumTracks;
-        this.albumGenres = albumGenres;
-        this.albumPopularity = albumPopularity;
+        this.tracks = tracks;
+        this.genres = genres;
+        this.popularity = popularity;
     }
 
     public static AlbumBuilder builder() {
@@ -36,72 +36,72 @@ public class Album {
     }
 
     public static class AlbumBuilder {
-        private String albumID;
-        private String albumName;
-        private String albumURI;
+        private String name;
+        private String id;
+        private String uri;
         private ArrayList<Artist> artists;
-        private String albumType;
+        private String type;
         private ArrayList<String> image;
         private int totalTracks;
-        private ArrayList<Track> albumTracks;
-        private ArrayList<String> albumGenres;
-        private int albumPopularity;
+        private ArrayList<Track> tracks;
+        private ArrayList<String> genres;
+        private int popularity;
         AlbumBuilder(){
         }
 
-        public AlbumBuilder setAlbumID(String albumID){
-            this.albumID = albumID;
+        public AlbumBuilder name(String name){
+            this.name = name;
             return this;
         }
-        public AlbumBuilder setAlbumName(String albumName){
-            this.albumName = albumName;
+        public AlbumBuilder id(String id){
+            this.id = id;
             return this;
         }
-        public AlbumBuilder setAlbumURI(String albumURI){
-            this.albumURI = albumURI;
+        public AlbumBuilder uri(String uri){
+            this.uri = uri;
             return this;
         }
-        public AlbumBuilder setArtists(ArrayList<Artist> artists){
+        public AlbumBuilder artists (ArrayList<Artist> artists){
             this.artists = artists;
             return this;
         }
-        public AlbumBuilder setAlbumType(String albumType){
-            this.albumType = albumType;
+        public AlbumBuilder type (String type){
+            this.type = type;
             return this;
         }
-        public AlbumBuilder setImage(ArrayList<String> image){
+        public AlbumBuilder image (ArrayList<String> image){
             this.image = image;
             return this;
         }
-        public AlbumBuilder setTotalTracks(int totalTracks){
+        public AlbumBuilder totalTracks(int totalTracks){
             this.totalTracks = totalTracks;
             return this;
         }
-        public AlbumBuilder setAlbumTracks(ArrayList<Track> albumTracks){
-            this.albumTracks = albumTracks;
+        public AlbumBuilder tracks(ArrayList<Track> tracks){
+            this.tracks = tracks;
             return this;
         }
-        public AlbumBuilder setAlbumGenres(ArrayList<String> albumGenres){
-            this.albumGenres = albumGenres;
+        public AlbumBuilder genres(ArrayList<String> genres){
+            this.genres = genres;
             return this;
         }
-        public AlbumBuilder setAlbumPopularity(int albumPopularity){
-            this.albumPopularity = albumPopularity;
+        public AlbumBuilder popularity(int popularity){
+            this.popularity = popularity;
             return this;
         }
     }
 
-    public String getAlbumID() { return albumID; }
-    public String getAlbumName() { return albumName; }
-    public String getAlbumURI() { return albumURI; }
+    public String getName() { return name; }
+    public String getId() { return id; }
+    public String getUri() { return uri; }
     public ArrayList<Artist> getArtists() { return artists; }
-    public String getAlbumType() { return albumType; }
+    public String getType() { return type; }
     public ArrayList<String> getImage() { return image; }
     public int getTotalTracks() { return totalTracks; }
 
-    public ArrayList<Track> getAlbumTracks() { return albumTracks; }
+    public ArrayList<Track> getTracks() { return tracks; }
 
-    public ArrayList<String> getAlbumGenres() { return albumGenres; }
+    public ArrayList<String> getGenres() { return genres; }
 
-    public int getAlbumPopularity() { return albumPopularity; }
+    public int getPopularity() { return popularity; }
 }
