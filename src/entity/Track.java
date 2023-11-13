@@ -2,6 +2,8 @@ package entity;
 import java.util.ArrayList;
 
 public class Track {
+
+    private Album album;
     private ArrayList<Artist> artists;
     private int duration_ms;
     private boolean explicit;
@@ -10,7 +12,8 @@ public class Track {
     private String uri;
     private boolean is_playable;
 
-    public Track(ArrayList<Artist> artists, int duration_ms, boolean isExplicit, String id, String name, String uri, boolean is_playable) {
+    public Track(Album album, ArrayList<Artist> artists, int duration_ms, boolean isExplicit, String id, String name, String uri, boolean is_playable) {
+        this.album = album;
         this.artists = artists;
         this.duration_ms = duration_ms;
         this.explicit = isExplicit;
@@ -25,6 +28,7 @@ public class Track {
     }
 
     public static class TrackBuilder {
+        private Album album;
         private ArrayList<Artist> artists;
         private int duration_ms;
         private boolean explicit;
@@ -36,6 +40,10 @@ public class Track {
         TrackBuilder() {
         }
 
+        public TrackBuilder album(Album album) {
+            this.album = album;
+            return this;
+        }
         public TrackBuilder artists(ArrayList<Artist> artists) {
             this.artists = artists;
             return this;
@@ -72,7 +80,7 @@ public class Track {
         }
 
         public Track build() {
-            return new Track(artists, duration_ms, explicit, id, name, uri, is_playable);
+            return new Track(album, artists, duration_ms, explicit, id, name, uri, is_playable);
         }
     }
 
@@ -83,7 +91,8 @@ public class Track {
             artistNames = artistNames + '\'' + artist.getName() + '\'' + ", ";
         }
         return "Your entity.Track{" +
-                "artists='" + artistNames +
+                "album=" + album.getAlbumName() + '\'' +
+                ", artists='" + artistNames +
                 "durationInMs=" + Integer.toString(duration_ms) + '\'' +
                 ", isExplicit=" + Boolean.toString(explicit) + '\'' +
                 ", id=" + id + '\'' +
@@ -92,6 +101,8 @@ public class Track {
                 ", is_playable=" + Boolean.toString(is_playable) + '\'' +
                 '}';
     }
+
+    public Album getAlbum() { return album; }
 
     public ArrayList<Artist> getArtists() { return artists; }
 
