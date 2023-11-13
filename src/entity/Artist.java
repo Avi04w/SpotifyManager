@@ -1,21 +1,21 @@
 package entity;
 
-import java.util.Arrays;
-
 public class Artist {
 
     // Refer to the API documentation for the meaning of these fields.
     private String name;
     private String id;
-    private String[] genres;
+//    private String[] genres;
     private int popularity;
     private String uri;
+    private String image;
 
-    public Artist(String name, String id, int popularity, String uri) {
+    public Artist(String name, String id, int popularity, String uri, String image) {
         this.name = name;
         this.id = id;
         this.popularity = popularity;
         this.uri = uri;
+        this.image = image;
     }
 
     public static ArtistBuilder builder() {
@@ -28,6 +28,7 @@ public class Artist {
 //        private String[] genres;
         private int popularity;
         private String uri;
+        private String image;
 
         ArtistBuilder() {
         }
@@ -57,8 +58,13 @@ public class Artist {
             return this;
         }
 
+        public ArtistBuilder image(String image){
+            this.image = image;
+            return this;
+        }
+
         public Artist build() {
-            return new Artist(name, id, popularity, uri);
+            return new Artist(name, id, popularity, uri, image);
         }
     }
 
@@ -91,5 +97,9 @@ public class Artist {
 
     public String getUri() {
         return uri;
+    }
+
+    public String getImage() {
+        return image;
     }
 }
