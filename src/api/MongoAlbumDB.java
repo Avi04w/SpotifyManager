@@ -8,6 +8,9 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 public class MongoAlbumDB {
     @Override
@@ -25,16 +28,29 @@ public class MongoAlbumDB {
             JSONObject responseBody = new JSONObject(response.body().string());
 
             if (response.code() == 200) {
+
+                String artistsString = responseBody.getString("artists");
+                List<String> artistsList = new ArrayList<String>(Arrays.asList(artistsString.split(",")));
+
+                String imageString = responseBody.getString("image");
+                List<String> imageList = new ArrayList<String>(Arrays.asList(imageString.split(",")));
+
+                String tracksString = responseBody.getString("tracks");
+                List<String> tracksList = new ArrayList<String>(Arrays.asList(tracksString.split(",")));
+
+                String genresString = responseBody.getString("genres");
+                List<String> genresList = new ArrayList<String>(Arrays.asList(genresString.split(",")));
+
                 return Album.builder()
                         .name(responseBody.getString("name"))
                         .id(responseBody.getString("id"))
                         .uri(responseBody.getString("uri"))
-//                        .artists(responseBody.getString("artists"))
+                        .artists(artistsList)
                         .type(responseBody.getString("album_type"))
-//                        .image(responseBody.getString("image"))
+                        .image((ArrayList<String>) imageList)
                         .totalTracks(responseBody.getInt("total_tracks"))
-//                        .tracks(responseBody.getString("tracks"))
-//                        .genres(responseBody.getString("genres"))
+                        .tracks(tracksList)
+                        .genres((ArrayList<String>) genresList)
                         .popularity(responseBody.getInt("popularity"))
                         .build();
             } else {

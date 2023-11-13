@@ -1,10 +1,8 @@
 package entity;
 
 import javax.sound.midi.Track;
-import java.awt.image.BufferedImage;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Objects;
+import java.util.List;
 
 public class Album {
     private String name;
@@ -77,7 +75,7 @@ public class Album {
             this.totalTracks = totalTracks;
             return this;
         }
-        public AlbumBuilder tracks(ArrayList<Track> tracks){
+        public AlbumBuilder tracks(List<String> tracks){
             this.tracks = tracks;
             return this;
         }
