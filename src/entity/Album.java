@@ -12,13 +12,13 @@ public class Album {
     private String albumURI;
     private ArrayList<Artist> artists;
     private String albumType;
-    private ArrayList<Objects> image;
+    private ArrayList<String> image;
     private int totalTracks;
     private ArrayList<Track> albumTracks;
     private ArrayList<String> albumGenres;
     private int albumPopularity;
 
-    public Album(String albumID, String albumName, String albumURI, ArrayList<Artist> artists, String albumType, ArrayList<Objects> image, int totalTracks, ArrayList<Track> albumTracks, ArrayList<String> albumGenres, int albumPopularity) {
+    public Album(String albumID, String albumName, String albumURI, ArrayList<Artist> artists, String albumType, ArrayList<String> image, int totalTracks, ArrayList<Track> albumTracks, ArrayList<String> albumGenres, int albumPopularity) {
         this.albumID = albumID;
         this.albumName = albumName;
         this.albumURI = albumURI;
@@ -41,7 +41,7 @@ public class Album {
         private String albumURI;
         private ArrayList<Artist> artists;
         private String albumType;
-        private ArrayList<Objects> image;
+        private ArrayList<String> image;
         private int totalTracks;
         private ArrayList<Track> albumTracks;
         private ArrayList<String> albumGenres;
@@ -69,7 +69,7 @@ public class Album {
             this.albumType = albumType;
             return this;
         }
-        public AlbumBuilder setImage(ArrayList<Objects> image){
+        public AlbumBuilder setImage(ArrayList<String> image){
             this.image = image;
             return this;
         }
@@ -96,7 +96,7 @@ public class Album {
     public String getAlbumURI() { return albumURI; }
     public ArrayList<Artist> getArtists() { return artists; }
     public String getAlbumType() { return albumType; }
-    public ArrayList<Objects> getImage() { return image; }
+    public ArrayList<String> getImage() { return image; }
     public int getTotalTracks() { return totalTracks; }
 
     public ArrayList<Track> getAlbumTracks() { return albumTracks; }
