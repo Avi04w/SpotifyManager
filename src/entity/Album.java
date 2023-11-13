@@ -1,6 +1,5 @@
 package entity;
 
-import javax.sound.midi.Track;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -75,8 +74,8 @@ public class Album {
             this.totalTracks = totalTracks;
             return this;
         }
-        public AlbumBuilder tracks(List<String> tracks){
-            this.tracks = tracks;
+        public AlbumBuilder tracks(List<Track> tracks){
+            this.tracks = (ArrayList<Track>) tracks;
             return this;
         }
         public AlbumBuilder genres(ArrayList<String> genres){
@@ -89,7 +88,7 @@ public class Album {
         }
     }
 
-    public String getName() { return name; }
+    public String getAlbumName() { return name; }
     public String getId() { return id; }
     public String getUri() { return uri; }
     public ArrayList<Artist> getArtists() { return artists; }

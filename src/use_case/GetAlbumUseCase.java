@@ -12,7 +12,7 @@ public class GetAlbumUseCase {
     public GetAlbumUseCase(AlbumDB albumDB, Authorization authorization, String id) {
         this.albumDB = albumDB;
         this.authorization = authorization;
-        this.id;
+        this.id = id;
     }
 
     public Album getAlbum() {

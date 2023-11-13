@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class MongoAlbumDB {
+public class MongoAlbumDB implements AlbumDB{
     @Override
     public Album getAlbum(Authorization authorization, String id) throws JSONException {
 
@@ -58,6 +58,9 @@ public class MongoAlbumDB {
             }
         } catch (IOException | JSONException e) {
             throw new RuntimeException(e);
+        }
+
+    }
 }
 
 
