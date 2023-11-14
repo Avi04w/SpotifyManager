@@ -4,18 +4,18 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Album {
-    private String name;
-    private String id;
-    private String uri;
-    private ArrayList<Artist> artists;
-    private String type;
-    private ArrayList<String> image;
-    private int totalTracks;
-    private ArrayList<Track> tracks;
-    private ArrayList<String> genres;
-    private int popularity;
+    private final String name;
+    private final String id;
+    private final String uri;
+    private final ArrayList<Artist> artists;
+    private final String type;
+    private final String image;
+    private final int totalTracks;
+    private final ArrayList<Track> tracks;
+    private final ArrayList<String> genres;
+    private final int popularity;
 
-    public Album(String name, String id, String uri, ArrayList<Artist> artists, String type, ArrayList<String> image, int totalTracks, ArrayList<Track> tracks, ArrayList<String> genres, int popularity) {
+    public Album(String name, String id, String uri, ArrayList<Artist> artists, String type, String image, int totalTracks, ArrayList<Track> tracks, ArrayList<String> genres, int popularity) {
         this.name = name;
         this.id = id;
         this.uri = uri;
@@ -38,7 +38,7 @@ public class Album {
         private String uri;
         private ArrayList<Artist> artists;
         private String type;
-        private ArrayList<String> image;
+        private String image;
         private int totalTracks;
         private ArrayList<Track> tracks;
         private ArrayList<String> genres;
@@ -66,7 +66,7 @@ public class Album {
             this.type = type;
             return this;
         }
-        public AlbumBuilder image (ArrayList<String> image){
+        public AlbumBuilder image (String image){
             this.image = image;
             return this;
         }
@@ -86,6 +86,10 @@ public class Album {
             this.popularity = popularity;
             return this;
         }
+
+        public Album build() {
+            return new Album(name, id, uri, artists, type, image, totalTracks, tracks, genres, popularity);
+        }
     }
 
     public String getAlbumName() { return name; }
@@ -93,7 +97,7 @@ public class Album {
     public String getUri() { return uri; }
     public ArrayList<Artist> getArtists() { return artists; }
     public String getType() { return type; }
-    public ArrayList<String> getImage() { return image; }
+    public String getImage() { return image; }
     public int getTotalTracks() { return totalTracks; }
 
     public ArrayList<Track> getTracks() { return tracks; }
