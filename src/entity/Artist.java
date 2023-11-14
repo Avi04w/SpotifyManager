@@ -6,14 +6,14 @@ public class Artist {
     private String name;
     private String id;
 //    private String[] genres;
-    private int popularity;
+//    private int popularity;
     private String uri;
     private String image;
 
-    public Artist(String name, String id, int popularity, String uri, String image) {
+    public Artist(String name, String id, String uri, String image) {
         this.name = name;
         this.id = id;
-        this.popularity = popularity;
+//        this.popularity = popularity;
         this.uri = uri;
         this.image = image;
     }
@@ -26,7 +26,7 @@ public class Artist {
         private String name;
         private String id;
 //        private String[] genres;
-        private int popularity;
+//        private int popularity;
         private String uri;
         private String image;
 
@@ -48,10 +48,10 @@ public class Artist {
 //            return this;
 //        }
 
-        public ArtistBuilder popularity(int popularity){
-            this.popularity = popularity;
-            return this;
-        }
+//        public ArtistBuilder popularity(int popularity){
+//            this.popularity = popularity;
+//            return this;
+//        }
 
         public ArtistBuilder uri(String uri) {
             this.uri = uri;
@@ -64,7 +64,7 @@ public class Artist {
         }
 
         public Artist build() {
-            return new Artist(name, id, popularity, uri, image);
+            return new Artist(name, id, uri, image);
         }
     }
 
@@ -74,7 +74,7 @@ public class Artist {
                 "displayName='" + name + '\'' +
                 ", id='" + id + '\'' +
 //                ", genres='" + Arrays.toString(genres) + '\'' +
-                ", popularity=" + Integer.toString(popularity) + '\'' +
+//                ", popularity=" + Integer.toString(popularity) + '\'' +
                 ", uri=" + uri +
                 '}';
     }
@@ -91,9 +91,9 @@ public class Artist {
 //        return genres;
 //    }
 
-    public int getPopularity() {
-        return popularity;
-    }
+//    public int getPopularity() {
+//        return popularity;
+//    }
 
     public String getUri() {
         return uri;

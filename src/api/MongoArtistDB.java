@@ -27,7 +27,7 @@ public class MongoArtistDB implements ArtistDB {
                         .name(responseBody.getString("name"))
                         .id(responseBody.getString("id"))
 //                      .genres(artist.getJSONArray("id"))
-                        .popularity(responseBody.getInt("popularity"))
+//                        .popularity(responseBody.getInt("popularity"))
                         .uri(responseBody.getString("uri"))
                         .build();
             } else {
