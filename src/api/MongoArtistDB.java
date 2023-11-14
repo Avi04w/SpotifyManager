@@ -28,6 +28,7 @@ public class MongoArtistDB implements ArtistDB {
                         .id(responseBody.getString("id"))
 //                      .genres(artist.getJSONArray("id"))
 //                        .popularity(responseBody.getInt("popularity"))
+                        .image(responseBody.getJSONArray("images").getJSONObject(0).getString("url"))
                         .uri(responseBody.getString("uri"))
                         .build();
             } else {
