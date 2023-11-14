@@ -32,13 +32,26 @@ public class MongoAlbumDB implements AlbumDB{
 
             if (response.code() == 200) {
 
-                String artistsString = responseBody.getString("artists");
-                List<String> artistsList = new ArrayList<String>(Arrays.asList(artistsString.split(",")));
+                ArrayList<Artist> artists = new ArrayList<>();
+                JSONArray artistsJSON = responseBody.getJSONArray("artists");
+
+                for (int i = 0; i < artistsJSON.length(); i++){
+                    JSONObject artistJSON = artistsJSON.getJSONObject(i);
+
+                    String artistId = artistJSON.getString("id");
+                    artists.add(new MongoArtistDB().getArtist(authorization, artistId));
+                }
 
                 String image = responseBody.getJSONArray("images").getJSONObject(0).getString("url");
 
-                JSONArray tracksJSON = responseBody.getJSONArray("tracks");
+                JSONArray tracksJSON = responseBody.getJSONObject("tracks").getJSONArray("items");
                 ArrayList<Track> tracks = new ArrayList<>();
+
+//                for (int i = 0; i < tracksJSON.length(); i++){
+//                    JSONObject trackJSON = tracksJSON.getJSONObject(i);
+//                    String trackId = trackJSON.getString("id");
+//                    tracks.add(new MongoTrackDB().getTrack(authorization, trackId));
+//                }
 
                 JSONArray genresJSON = responseBody.getJSONArray("genres");
                 ArrayList<String> genres = new ArrayList<>();
@@ -50,7 +63,7 @@ public class MongoAlbumDB implements AlbumDB{
                         .name(responseBody.getString("name"))
                         .id(responseBody.getString("id"))
                         .uri(responseBody.getString("uri"))
-                        .artists(new ArrayList<Artist>())
+                        .artists(artists)
                         .type(responseBody.getString("album_type"))
                         .image(image)
                         .totalTracks(responseBody.getInt("total_tracks"))
