@@ -7,8 +7,10 @@ import entity.Track;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import use_case.GetArtistUseCase;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -27,27 +29,37 @@ public class MongoPlayerDB implements PlayerDB{
 
         try {
             Response response = client.newCall(request).execute();
-            System.out.println(response);
             JSONObject responseBody = new JSONObject(response.body().string());
-            System.out.println(responseBody);
 
             if (response.code() == 200) {
-                JSONObject trackResponse = responseBody.getJSONObject("item");
+                JSONObject trackJSON = responseBody.getJSONObject("item");
 
-                ArrayList<Artist> artists = new ArrayList<Artist>();
+                JSONArray artistsJSON = trackJSON.getJSONArray("artists");
+                ArrayList<Artist> artists = new ArrayList<>();
+
+                for (int i = 0; i < artistsJSON.length(); i++){
+                    JSONObject artistJSON = artistsJSON.getJSONObject(i);
+
+                    String artistId = artistJSON.getString("id");
+                    artists.add(new MongoArtistDB().getArtist(authorization, artistId));
+                }
+
+                JSONObject albumJSON = trackJSON.getJSONObject("album");
+                String albumId = albumJSON.getString("id");
+
+                Album album = new MongoAlbumDB().getAlbum(authorization, albumId);
 
                 Track track = Track.builder()
+                        .album(album)
                         .artists(artists)
-                        .duration_ms(trackResponse.getInt("duration_ms"))
-                        .explicit(trackResponse.getBoolean("explicit"))
-                        .id(trackResponse.getString("id"))
-                        .name(trackResponse.getString("name"))
-                        .uri(trackResponse.getString("uri"))
-                        .is_playable(trackResponse.getBoolean("is_playable"))
+                        .duration_ms(trackJSON.getInt("duration_ms"))
+                        .explicit(trackJSON.getBoolean("explicit"))
+                        .id(trackJSON.getString("id"))
+                        .name(trackJSON.getString("name"))
+                        .uri(trackJSON.getString("uri"))
                         .build();
 
                 return Player.builder()
-                        .name(responseBody.getString("name"))
                         .isPlaying(responseBody.getBoolean("is_playing"))
                         .track(track)
                         .progress(responseBody.getInt("progress_ms"))
