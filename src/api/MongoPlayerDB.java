@@ -4,13 +4,10 @@ import entity.Album;
 import entity.Artist;
 import entity.Player;
 import entity.Track;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.Response;
+import okhttp3.*;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import use_case.GetArtistUseCase;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -72,5 +69,163 @@ public class MongoPlayerDB implements PlayerDB{
             throw new RuntimeException(e);
         }
 
+    }
+
+    @Override
+    public String getAvailableDevice(Authorization authorization) {
+        String url = "https://api.spotify.com/v1/me/player/devices";
+
+        OkHttpClient client = new OkHttpClient().newBuilder().build();
+        Request request = new Request.Builder()
+                .url(url)
+                .addHeader("Authorization", "Bearer " + authorization.getSpotifyApi().getAccessToken())
+                .build();
+
+        try {
+            Response response = client.newCall(request).execute();
+            JSONObject responseBody = new JSONObject(response.body().string());
+
+            if (response.code() == 200) {
+                return responseBody.getJSONArray("devices").getJSONObject(0).getString("id");
+            } else {
+                throw new RuntimeException(responseBody.getJSONObject("error").getString("message"));
+            }
+
+        } catch (IOException | JSONException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
+    public void resume(Authorization authorization, String deviceId) {
+        String baseUrl = "https://api.spotify.com/v1/me/player/play";
+        makePutCall(authorization, deviceId, baseUrl);
+    }
+
+    @Override
+    public void pause(Authorization authorization, String deviceId) {
+        String baseUrl = "https://api.spotify.com/v1/me/player/pause";
+        makePutCall(authorization, deviceId, baseUrl);
+    }
+
+    @Override
+    public void skip(Authorization authorization, String deviceId) {
+        String baseUrl = "https://api.spotify.com/v1/me/player/next";
+        HttpUrl.Builder urlBuilder = HttpUrl.parse(baseUrl).newBuilder();
+        urlBuilder.addQueryParameter("device_id", deviceId);
+
+        makePostCall(authorization, urlBuilder);
+    }
+
+    @Override
+    public void previous(Authorization authorization, String deviceId) {
+        String baseUrl = "https://api.spotify.com/v1/me/player/previous";
+        HttpUrl.Builder urlBuilder = HttpUrl.parse(baseUrl).newBuilder();
+        urlBuilder.addQueryParameter("device_id", deviceId);
+
+        makePostCall(authorization, urlBuilder);
+    }
+
+    @Override
+    public void setVolume(Authorization authorization, int volume, String deviceId) {
+        String baseUrl = "https://api.spotify.com/v1/me/player/volume";
+
+        HttpUrl.Builder urlBuilder = HttpUrl.parse(baseUrl).newBuilder();
+        urlBuilder.addQueryParameter("device_id", deviceId);
+        urlBuilder.addQueryParameter("volume_percent", String.valueOf(volume));
+
+        makePostCall(authorization, urlBuilder);
+    }
+
+    @Override
+    public void toggleShuffle(Authorization authorization, boolean state, String deviceId) {
+        String baseUrl = "https://api.spotify.com/v1/me/player/shuffle";
+
+        HttpUrl.Builder urlBuilder = HttpUrl.parse(baseUrl).newBuilder();
+        urlBuilder.addQueryParameter("device_id", deviceId);
+        urlBuilder.addQueryParameter("state", String.valueOf(state));
+
+        makePostCall(authorization, urlBuilder);
+    }
+
+    @Override
+    public ArrayList<Track> getQueue(Authorization authorization) {
+        String url = "https://api.spotify.com/v1/me/player/queue";
+
+        OkHttpClient client = new OkHttpClient().newBuilder().build();
+        Request request = new Request.Builder()
+                .url(url)
+                .addHeader("Authorization", "Bearer " + authorization.getSpotifyApi().getAccessToken())
+                .build();
+
+        try {
+            Response response = client.newCall(request).execute();
+            JSONObject responseBody = new JSONObject(response.body().string());
+
+            if (response.code() == 200) {
+                JSONArray queueJSON = responseBody.getJSONArray("queue");
+
+                ArrayList<Track> tracks = new ArrayList<>();
+                for (int i = 0; i < queueJSON.length(); i++){
+                    String trackId = queueJSON.getJSONObject(i).getString("id");
+                    tracks.add(new MongoTrackDB().getTrack(authorization, trackId));
+                }
+
+                return tracks;
+
+            } else {
+                throw new RuntimeException(responseBody.getJSONObject("error").getString("message"));
+            }
+
+        } catch (IOException | JSONException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    private void makePostCall(Authorization authorization, HttpUrl.Builder urlBuilder) {
+        String url = urlBuilder.build().toString();
+
+        OkHttpClient client = new OkHttpClient().newBuilder().build();
+
+        RequestBody formBody = new FormBody.Builder()
+                .build();
+
+        Request request = new Request.Builder()
+                .url(url)
+                .post(formBody)
+                .addHeader("Authorization", "Bearer " + authorization.getSpotifyApi().getAccessToken())
+                .build();
+
+        try {
+            Response response = client.newCall(request).execute();
+
+        } catch (IOException | JSONException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    private void makePutCall(Authorization authorization, String deviceId, String baseUrl) {
+        HttpUrl.Builder urlBuilder = HttpUrl.parse(baseUrl).newBuilder();
+        urlBuilder.addQueryParameter("device_id", deviceId);
+
+        String url = urlBuilder.build().toString();
+
+        OkHttpClient client = new OkHttpClient().newBuilder().build();
+
+        RequestBody formBody = new FormBody.Builder()
+                .build();
+
+        Request request = new Request.Builder()
+                .url(url)
+                .put(formBody)
+                .addHeader("Authorization", "Bearer " + authorization.getSpotifyApi().getAccessToken())
+                .build();
+
+        try {
+            Response response = client.newCall(request).execute();
+
+        } catch (IOException | JSONException e) {
+            throw new RuntimeException(e);
+        }
     }
 }
