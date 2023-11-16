@@ -32,15 +32,8 @@ public class MongoAlbumDB implements AlbumDB{
 
             if (response.code() == 200) {
 
-                ArrayList<Artist> artists = new ArrayList<>();
                 JSONArray artistsJSON = responseBody.getJSONArray("artists");
-
-                for (int i = 0; i < artistsJSON.length(); i++){
-                    JSONObject artistJSON = artistsJSON.getJSONObject(i);
-
-                    String artistId = artistJSON.getString("id");
-                    artists.add(new MongoArtistDB().getArtist(authorization, artistId));
-                }
+                ArrayList<Artist> artists = MongoArtistDB.getArtistsArray(authorization, artistsJSON);
 
                 String image = responseBody.getJSONArray("images").getJSONObject(0).getString("url");
 

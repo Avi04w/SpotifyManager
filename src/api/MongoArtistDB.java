@@ -2,10 +2,12 @@ package api;
 
 import entity.Artist;
 import okhttp3.*;
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 public class MongoArtistDB implements ArtistDB {
     @Override
@@ -37,5 +39,16 @@ public class MongoArtistDB implements ArtistDB {
         } catch (IOException | JSONException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    static ArrayList<Artist> getArtistsArray(Authorization authorization, JSONArray artistsJSON) {
+        ArrayList<Artist> artists = new ArrayList<>();
+        for (int i = 0; i < artistsJSON.length(); i++){
+            JSONObject artistJSON = artistsJSON.getJSONObject(i);
+            String artistId = artistJSON.getString("id");
+            artists.add(new MongoArtistDB().getArtist(authorization, artistId));
+        }
+
+        return artists;
     }
 }
