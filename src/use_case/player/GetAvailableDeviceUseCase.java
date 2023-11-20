@@ -10,7 +10,7 @@ public class GetAvailableDeviceUseCase {
         this.playerDB = playerDB;
     }
 
-    public void getAvailableDevice(Authorization authorization){
-        playerDB.getAvailableDevice(authorization);
+    public String getAvailableDevice(Authorization authorization){
+        return playerDB.getAvailableDevice(authorization);
     }
 }
