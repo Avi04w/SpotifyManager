@@ -1,7 +1,5 @@
 package entity;
 
-import java.util.ArrayList;
-
 public class Player {
     private final boolean isPlaying;
     private final Track track;
