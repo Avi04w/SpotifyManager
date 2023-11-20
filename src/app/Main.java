@@ -2,10 +2,9 @@ package app;
 
 import api.Authorization;
 import api.Token;
-import entity.Artist;
 import entity.Player;
-import use_case.GetArtistUseCase;
-import use_case.GetPlayerUseCase;
+import use_case.player.PlayerInputData;
+import use_case.player.PlayerOutputData;
 
 import java.util.Scanner;
 
@@ -26,13 +25,11 @@ public class Main {
 
         Config config = new Config();
 
-        GetArtistUseCase getArtistUseCase = config.getArtistUseCase(token, "0TnOYISbd1XYRBk9myaseg");
-//        GetPlayerUseCase getPlayerUseCase = config.getPlayerUseCase(authorization);
+        PlayerInputData playerInputData = config.getPlayerInputData(token);
+        PlayerOutputData playerOutputData = config.getPlayerOutputData(token);
 
-        Artist artist = getArtistUseCase.getArtist();
+        Player player = playerOutputData.getPlayer(token);
 
-        System.out.println(artist);
-
-//        Player player = getPlayerUseCase.getPlayer();
+        System.out.println(player);
     }
 }

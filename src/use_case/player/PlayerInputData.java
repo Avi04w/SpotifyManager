@@ -1,4 +1,4 @@
-package use_case;
+package use_case.player;
 
 import api.Authorization;
 import api.PlayerDB;
@@ -14,18 +14,6 @@ public class PlayerInputData {
     public PlayerInputData(Authorization authorization, PlayerDB playerDB) {
         this.authorization = authorization;
         this.playerDB = playerDB;
-    }
-
-    public String getAvailableDevice(Authorization authorization){
-        return playerDB.getAvailableDevice(authorization);
-    }
-
-    public Player getPlayer(Authorization authorization) {
-        return playerDB.getPlayer(authorization);
-    }
-
-    public ArrayList<Track> getQueue(Authorization authorization){
-        return playerDB.getQueue(authorization);
     }
 
     public void pause(Authorization authorization, String deviceId){
