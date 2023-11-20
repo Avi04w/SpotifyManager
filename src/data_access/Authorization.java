@@ -1,4 +1,4 @@
-package api;
+package data_access;
 
 import se.michaelthelin.spotify.SpotifyApi;
 

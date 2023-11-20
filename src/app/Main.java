@@ -1,7 +1,7 @@
 package app;
 
-import api.Authorization;
-import api.Token;
+import data_access.Authorization;
+import data_access.Token;
 import entity.Player;
 import use_case.player.PlayerInputData;
 import use_case.player.PlayerOutputData;

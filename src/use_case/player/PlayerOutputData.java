@@ -1,7 +1,6 @@
 package use_case.player;
 
-import api.Authorization;
-import api.PlayerDB;
+import data_access.Authorization;
 import entity.Player;
 import entity.Track;
 
@@ -9,9 +8,9 @@ import java.util.ArrayList;
 
 public class PlayerOutputData {
     final private Authorization authorization;
-    final private PlayerDB playerDB;
+    final private PlayerDataAccessInterface playerDB;
 
-    public PlayerOutputData(Authorization authorization, PlayerDB playerDB) {
+    public PlayerOutputData(Authorization authorization, PlayerDataAccessInterface playerDB) {
         this.authorization = authorization;
         this.playerDB = playerDB;
     }

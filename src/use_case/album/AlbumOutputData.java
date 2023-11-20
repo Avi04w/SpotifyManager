@@ -1,14 +1,13 @@
-package use_case;
+package use_case.album;
 
-import api.Authorization;
+import data_access.Authorization;
 import entity.Album;
-import api.AlbumDB;
 
-public class GetAlbumUseCase {
-    private final AlbumDB albumDB;
+public class AlbumOutputData {
+    private final AlbumDataAccessInterface albumDB;
     private final Authorization authorization;
 
-    public GetAlbumUseCase(Authorization authorization, AlbumDB albumDB) {
+    public AlbumOutputData(Authorization authorization, AlbumDataAccessInterface albumDB) {
         this.albumDB = albumDB;
         this.authorization = authorization;
     }

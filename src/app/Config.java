@@ -1,22 +1,26 @@
 package app;
 
-import api.*;
-import use_case.*;
+import data_access.*;
+import use_case.album.AlbumDataAccessInterface;
+import use_case.album.AlbumOutputData;
+import use_case.artist.ArtistDataAccessInterface;
+import use_case.artist.ArtistOutputData;
+import use_case.player.PlayerDataAccessInterface;
 import use_case.player.PlayerInputData;
 import use_case.player.PlayerOutputData;
 
 public class Config {
 
-    private final ArtistDB artistDB = new MongoArtistDB();
-    private final PlayerDB playerDB = new MongoPlayerDB();
-    private final AlbumDB albumDB = new MongoAlbumDB();
+    private final ArtistDataAccessInterface artistDB = new ArtistDAO();
+    private final PlayerDataAccessInterface playerDB = new PlayerDAO();
+    private final AlbumDataAccessInterface albumDB = new AlbumDAO();
 
-    public GetArtistUseCase getArtistUseCase(Authorization authorization) {
-        return new GetArtistUseCase(authorization, artistDB);
+    public ArtistOutputData getArtistUseCase(Authorization authorization) {
+        return new ArtistOutputData(authorization, artistDB);
     }
 
-    public GetAlbumUseCase getAlbumUseCase(Authorization authorization) {
-        return new GetAlbumUseCase(authorization, albumDB);
+    public AlbumOutputData getAlbumUseCase(Authorization authorization) {
+        return new AlbumOutputData(authorization, albumDB);
     }
 
     public PlayerInputData getPlayerInputData(Authorization authorization){

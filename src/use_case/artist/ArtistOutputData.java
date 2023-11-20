@@ -1,14 +1,13 @@
-package use_case;
+package use_case.artist;
 
-import api.Authorization;
+import data_access.Authorization;
 import entity.Artist;
-import api.ArtistDB;
 
-public final class GetArtistUseCase {
-    private final ArtistDB artistDB;
+public final class ArtistOutputData {
+    private final ArtistDataAccessInterface artistDB;
     private final Authorization authorization;
 
-    public GetArtistUseCase(Authorization authorization, ArtistDB artistDB) {
+    public ArtistOutputData(Authorization authorization, ArtistDataAccessInterface artistDB) {
         this.authorization = authorization;
         this.artistDB = artistDB;
     }

@@ -1,4 +1,4 @@
-package api;
+package data_access;
 
 import org.apache.hc.core5.http.ParseException;
 import se.michaelthelin.spotify.SpotifyApi;

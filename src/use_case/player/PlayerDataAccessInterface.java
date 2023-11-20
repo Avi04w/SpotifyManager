@@ -1,11 +1,12 @@
-package api;
+package use_case.player;
 
+import data_access.Authorization;
 import entity.Player;
 import entity.Track;
 
 import java.util.ArrayList;
 
-public interface PlayerDB {
+public interface PlayerDataAccessInterface {
     Player getPlayer(Authorization authorization);
     String getAvailableDevice(Authorization authorization);
     void resume(Authorization authorization, String deviceId);
