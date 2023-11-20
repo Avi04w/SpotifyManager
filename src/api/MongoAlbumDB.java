@@ -1,9 +1,12 @@
 package api;
 
 import entity.Album;
+import entity.Artist;
+import entity.Track;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -29,28 +32,36 @@ public class MongoAlbumDB implements AlbumDB{
 
             if (response.code() == 200) {
 
-                String artistsString = responseBody.getString("artists");
-                List<String> artistsList = new ArrayList<String>(Arrays.asList(artistsString.split(",")));
+                JSONArray artistsJSON = responseBody.getJSONArray("artists");
+                ArrayList<Artist> artists = MongoArtistDB.getArtistsArray(authorization, artistsJSON);
 
-                String imageString = responseBody.getString("image");
-                List<String> imageList = new ArrayList<String>(Arrays.asList(imageString.split(",")));
+                String image = responseBody.getJSONArray("images").getJSONObject(0).getString("url");
 
-                String tracksString = responseBody.getString("tracks");
-                List<String> tracksList = new ArrayList<String>(Arrays.asList(tracksString.split(",")));
+                JSONArray tracksJSON = responseBody.getJSONObject("tracks").getJSONArray("items");
+                ArrayList<Track> tracks = new ArrayList<>();
 
-                String genresString = responseBody.getString("genres");
-                List<String> genresList = new ArrayList<String>(Arrays.asList(genresString.split(",")));
+//                for (int i = 0; i < tracksJSON.length(); i++){
+//                    JSONObject trackJSON = tracksJSON.getJSONObject(i);
+//                    String trackId = trackJSON.getString("id");
+//                    tracks.add(new MongoTrackDB().getTrack(authorization, trackId));
+//                }
+
+                JSONArray genresJSON = responseBody.getJSONArray("genres");
+                ArrayList<String> genres = new ArrayList<>();
+                for (int i = 0; i < genresJSON.length(); i++){
+                    genres.add(genresJSON.getString(i));
+                }
 
                 return Album.builder()
                         .name(responseBody.getString("name"))
                         .id(responseBody.getString("id"))
                         .uri(responseBody.getString("uri"))
-                        .artists(artistsList)
+                        .artists(artists)
                         .type(responseBody.getString("album_type"))
-                        .image((ArrayList<String>) imageList)
+                        .image(image)
                         .totalTracks(responseBody.getInt("total_tracks"))
-                        .tracks(tracksList)
-                        .genres((ArrayList<String>) genresList)
+                        .tracks(tracks)
+                        .genres(genres)
                         .popularity(responseBody.getInt("popularity"))
                         .build();
             } else {

@@ -1,7 +1,11 @@
 package api;
 
+import entity.Album;
 import entity.Artist;
-import okhttp3.*;
+import entity.Track;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -9,11 +13,11 @@ import org.json.JSONObject;
 import java.io.IOException;
 import java.util.ArrayList;
 
-public class MongoArtistDB implements ArtistDB {
+public class MongoTrackDB implements TrackDB{
     @Override
-    public Artist getArtist(Authorization authorization, String id) throws JSONException {
+    public Track getTrack(Authorization authorization, String id) throws JSONException {
 
-        String url = "https://api.spotify.com/v1/artists/";
+        String url = "https://api.spotify.com/v1/tracks/";
 
         OkHttpClient client = new OkHttpClient().newBuilder().build();
         Request request = new Request.Builder()
@@ -25,12 +29,16 @@ public class MongoArtistDB implements ArtistDB {
             JSONObject responseBody = new JSONObject(response.body().string());
 
             if (response.code() == 200) {
-                return Artist.builder()
-                        .name(responseBody.getString("name"))
+                JSONArray artistsJSON = responseBody.getJSONArray("artists");
+                ArrayList<Artist> artists = MongoArtistDB.getArtistsArray(authorization, artistsJSON);
+
+                return Track.builder()
+                        .album(new MongoAlbumDB().getAlbum(authorization, responseBody.getJSONObject("album").getString("id")))
+                        .artists(artists)
+                        .duration_ms(responseBody.getInt("duration_ms"))
+                        .explicit(responseBody.getBoolean("explicit"))
                         .id(responseBody.getString("id"))
-//                      .genres(artist.getJSONArray("id"))
-//                        .popularity(responseBody.getInt("popularity"))
-                        .image(responseBody.getJSONArray("images").getJSONObject(0).getString("url"))
+                        .name(responseBody.getString("name"))
                         .uri(responseBody.getString("uri"))
                         .build();
             } else {
@@ -39,16 +47,6 @@ public class MongoArtistDB implements ArtistDB {
         } catch (IOException | JSONException e) {
             throw new RuntimeException(e);
         }
-    }
 
-    static ArrayList<Artist> getArtistsArray(Authorization authorization, JSONArray artistsJSON) {
-        ArrayList<Artist> artists = new ArrayList<>();
-        for (int i = 0; i < artistsJSON.length(); i++){
-            JSONObject artistJSON = artistsJSON.getJSONObject(i);
-            String artistId = artistJSON.getString("id");
-            artists.add(new MongoArtistDB().getArtist(authorization, artistId));
-        }
-
-        return artists;
     }
 }

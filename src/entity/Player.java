@@ -3,13 +3,11 @@ package entity;
 import java.util.ArrayList;
 
 public class Player {
-    private String name;
-    private boolean isPlaying;
-    private Track track;
-    private int progress;
+    private final boolean isPlaying;
+    private final Track track;
+    private final int progress;
 
-    public Player(String name, boolean isPlaying, Track track, int progress) {
-        this.name = name;
+    public Player(boolean isPlaying, Track track, int progress) {
         this.isPlaying = isPlaying;
         this.track = track;
         this.progress = progress;
@@ -20,17 +18,11 @@ public class Player {
     }
 
     public static class PlayerBuilder {
-        private String name;
         private boolean isPlaying;
         private Track track;
         private int progress;
 
         PlayerBuilder() {
-        }
-
-        public PlayerBuilder name(String name) {
-            this.name = name;
-            return this;
         }
 
         public PlayerBuilder isPlaying(boolean isPlaying) {
@@ -49,12 +41,8 @@ public class Player {
         }
 
         public Player build() {
-            return new Player(name, isPlaying, track, progress);
+            return new Player(isPlaying, track, progress);
         }
-    }
-
-    public String getName() {
-        return name;
     }
 
     public boolean isPlaying() {
@@ -68,7 +56,7 @@ public class Player {
     @Override
     public String toString() {
         return "Player{" +
-                "trackName='" + name +
+                "track='" + track +
                 ", isPlaying=" + isPlaying +
                 ", progress=" + progress +
                 '}';

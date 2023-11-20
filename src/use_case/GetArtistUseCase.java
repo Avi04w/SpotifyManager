@@ -6,16 +6,12 @@ import api.ArtistDB;
 
 public final class GetArtistUseCase {
     private final ArtistDB artistDB;
-    private Authorization authorization;
-    private String id;
 
-    public GetArtistUseCase(ArtistDB artistDB, Authorization authorization, String id) {
+    public GetArtistUseCase(ArtistDB artistDB) {
         this.artistDB = artistDB;
-        this.authorization = authorization;
-        this.id = id;
     }
 
-    public Artist getArtist() {
+    public Artist getArtist(Authorization authorization, String id) {
         return artistDB.getArtist(authorization, id);
     }
 }

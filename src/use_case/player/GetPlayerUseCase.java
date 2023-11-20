@@ -1,4 +1,4 @@
-package use_case;
+package use_case.player;
 
 import api.PlayerDB;
 import api.Authorization;
@@ -6,14 +6,12 @@ import entity.Player;
 
 public class GetPlayerUseCase {
     private final PlayerDB playerDB;
-    private final Authorization authorization;
 
-    public GetPlayerUseCase(PlayerDB playerDB, Authorization authorization) {
+    public GetPlayerUseCase(PlayerDB playerDB) {
         this.playerDB = playerDB;
-        this.authorization = authorization;
     }
 
-    public Player getPlayer() {
+    public Player getPlayer(Authorization authorization) {
         return playerDB.getPlayer(authorization);
     }
 }

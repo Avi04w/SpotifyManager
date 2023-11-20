@@ -6,16 +6,13 @@ import api.AlbumDB;
 
 public class GetAlbumUseCase {
     private final AlbumDB albumDB;
-    private Authorization authorization;
-    private String id;
 
-    public GetAlbumUseCase(AlbumDB albumDB, Authorization authorization, String id) {
+    public GetAlbumUseCase(AlbumDB albumDB) {
         this.albumDB = albumDB;
-        this.authorization = authorization;
-        this.id = id;
+
     }
 
-    public Album getAlbum() {
+    public Album getAlbum(Authorization authorization, String id) {
         return albumDB.getAlbum(authorization, id);
     }
 }
