@@ -1,6 +1,5 @@
-package api;
+package data_access;
 
-import entity.Album;
 import entity.Artist;
 import entity.Track;
 import okhttp3.OkHttpClient;
@@ -9,11 +8,12 @@ import okhttp3.Response;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import use_case.track.TrackDataAccessInterface;
 
 import java.io.IOException;
 import java.util.ArrayList;
 
-public class MongoTrackDB implements TrackDB{
+public class TrackDAO implements TrackDataAccessInterface {
     @Override
     public Track getTrack(Authorization authorization, String id) throws JSONException {
 
@@ -30,10 +30,10 @@ public class MongoTrackDB implements TrackDB{
 
             if (response.code() == 200) {
                 JSONArray artistsJSON = responseBody.getJSONArray("artists");
-                ArrayList<Artist> artists = MongoArtistDB.getArtistsArray(authorization, artistsJSON);
+                ArrayList<Artist> artists = ArtistDAO.getArtistsArray(authorization, artistsJSON);
 
                 return Track.builder()
-                        .album(new MongoAlbumDB().getAlbum(authorization, responseBody.getJSONObject("album").getString("id")))
+                        .album(new AlbumDAO().getAlbum(authorization, responseBody.getJSONObject("album").getString("id")))
                         .artists(artists)
                         .duration_ms(responseBody.getInt("duration_ms"))
                         .explicit(responseBody.getBoolean("explicit"))

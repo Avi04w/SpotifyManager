@@ -1,15 +1,16 @@
-package api;
+package data_access;
 
 import entity.Artist;
 import okhttp3.*;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import use_case.artist.ArtistDataAccessInterface;
 
 import java.io.IOException;
 import java.util.ArrayList;
 
-public class MongoArtistDB implements ArtistDB {
+public class ArtistDAO implements ArtistDataAccessInterface {
     @Override
     public Artist getArtist(Authorization authorization, String id) throws JSONException {
 
@@ -46,7 +47,7 @@ public class MongoArtistDB implements ArtistDB {
         for (int i = 0; i < artistsJSON.length(); i++){
             JSONObject artistJSON = artistsJSON.getJSONObject(i);
             String artistId = artistJSON.getString("id");
-            artists.add(new MongoArtistDB().getArtist(authorization, artistId));
+            artists.add(new ArtistDAO().getArtist(authorization, artistId));
         }
 
         return artists;

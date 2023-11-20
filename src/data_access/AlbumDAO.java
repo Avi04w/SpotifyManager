@@ -1,4 +1,4 @@
-package api;
+package data_access;
 
 import entity.Album;
 import entity.Artist;
@@ -9,13 +9,12 @@ import okhttp3.Response;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import use_case.album.AlbumDataAccessInterface;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 
-public class MongoAlbumDB implements AlbumDB{
+public class AlbumDAO implements AlbumDataAccessInterface {
     @Override
     public Album getAlbum(Authorization authorization, String id) throws JSONException {
 
@@ -33,7 +32,7 @@ public class MongoAlbumDB implements AlbumDB{
             if (response.code() == 200) {
 
                 JSONArray artistsJSON = responseBody.getJSONArray("artists");
-                ArrayList<Artist> artists = MongoArtistDB.getArtistsArray(authorization, artistsJSON);
+                ArrayList<Artist> artists = ArtistDAO.getArtistsArray(authorization, artistsJSON);
 
                 String image = responseBody.getJSONArray("images").getJSONObject(0).getString("url");
 

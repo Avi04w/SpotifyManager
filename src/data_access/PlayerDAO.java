@@ -1,4 +1,4 @@
-package api;
+package data_access;
 
 import entity.Album;
 import entity.Artist;
@@ -8,11 +8,12 @@ import okhttp3.*;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import use_case.player.PlayerDataAccessInterface;
 
 import java.io.IOException;
 import java.util.ArrayList;
 
-public class MongoPlayerDB implements PlayerDB{
+public class PlayerDAO implements PlayerDataAccessInterface {
     @Override
     public Player getPlayer(Authorization authorization) {
 
@@ -38,13 +39,13 @@ public class MongoPlayerDB implements PlayerDB{
                     JSONObject artistJSON = artistsJSON.getJSONObject(i);
 
                     String artistId = artistJSON.getString("id");
-                    artists.add(new MongoArtistDB().getArtist(authorization, artistId));
+                    artists.add(new ArtistDAO().getArtist(authorization, artistId));
                 }
 
                 JSONObject albumJSON = trackJSON.getJSONObject("album");
                 String albumId = albumJSON.getString("id");
 
-                Album album = new MongoAlbumDB().getAlbum(authorization, albumId);
+                Album album = new AlbumDAO().getAlbum(authorization, albumId);
 
                 Track track = Track.builder()
                         .album(album)
@@ -168,7 +169,7 @@ public class MongoPlayerDB implements PlayerDB{
                 ArrayList<Track> tracks = new ArrayList<>();
                 for (int i = 0; i < queueJSON.length(); i++){
                     String trackId = queueJSON.getJSONObject(i).getString("id");
-                    tracks.add(new MongoTrackDB().getTrack(authorization, trackId));
+                    tracks.add(new TrackDAO().getTrack(authorization, trackId));
                 }
 
                 return tracks;

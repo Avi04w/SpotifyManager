@@ -1,31 +1,14 @@
-package use_case;
+package use_case.player;
 
-import api.Authorization;
-import api.PlayerDB;
-import entity.Player;
-import entity.Track;
-
-import java.util.ArrayList;
+import data_access.Authorization;
 
 public class PlayerInputData {
     final private Authorization authorization;
-    final private PlayerDB playerDB;
+    final private PlayerDataAccessInterface playerDB;
 
-    public PlayerInputData(Authorization authorization, PlayerDB playerDB) {
+    public PlayerInputData(Authorization authorization, PlayerDataAccessInterface playerDB) {
         this.authorization = authorization;
         this.playerDB = playerDB;
-    }
-
-    public String getAvailableDevice(Authorization authorization){
-        return playerDB.getAvailableDevice(authorization);
-    }
-
-    public Player getPlayer(Authorization authorization) {
-        return playerDB.getPlayer(authorization);
-    }
-
-    public ArrayList<Track> getQueue(Authorization authorization){
-        return playerDB.getQueue(authorization);
     }
 
     public void pause(Authorization authorization, String deviceId){
