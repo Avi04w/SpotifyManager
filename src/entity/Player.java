@@ -51,6 +51,10 @@ public class Player {
         return progress;
     }
 
+    public Track getCurrentTrack(){
+        return track;
+    }
+
     @Override
     public String toString() {
         return "Player{" +
