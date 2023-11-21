@@ -66,8 +66,8 @@ public class PlayerDAO implements PlayerDataAccessInterface {
                 throw new RuntimeException(responseBody.getJSONObject("error").getString("message"));
             }
 
-        } catch (IOException | JSONException e) {
-            throw new RuntimeException(e);
+        } catch (IOException | RuntimeException e) {
+            throw new RuntimeException("Device is not online!", e);
         }
 
     }
@@ -93,7 +93,7 @@ public class PlayerDAO implements PlayerDataAccessInterface {
             }
 
         } catch (IOException | JSONException e) {
-            throw new RuntimeException(e);
+            throw new RuntimeException("No available devices!", e);
         }
     }
 
