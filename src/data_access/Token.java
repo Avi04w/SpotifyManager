@@ -45,6 +45,7 @@ public class Token implements Authorization{
 
         } catch (IOException | SpotifyWebApiException | ParseException e) {
             System.out.println("Error: " + e.getMessage());
+            throw new RuntimeException(e);
         }
     }
 
