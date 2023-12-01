@@ -61,13 +61,15 @@ public class PlayerDAO implements PlayerDataAccessInterface {
                         .isPlaying(responseBody.getBoolean("is_playing"))
                         .track(track)
                         .progress(responseBody.getInt("progress_ms"))
+                        .volume(responseBody.getJSONObject("device").getInt("volume_percent"))
+                        .shuffle(responseBody.getBoolean("shuffle_state"))
                         .build();
             } else {
                 throw new RuntimeException(responseBody.getJSONObject("error").getString("message"));
             }
 
-        } catch (IOException | JSONException e) {
-            throw new RuntimeException(e);
+        } catch (IOException | RuntimeException e) {
+            throw new RuntimeException("Device is not online!", e);
         }
 
     }
@@ -93,7 +95,7 @@ public class PlayerDAO implements PlayerDataAccessInterface {
             }
 
         } catch (IOException | JSONException e) {
-            throw new RuntimeException(e);
+            throw new RuntimeException("No available devices!", e);
         }
     }
 
@@ -132,10 +134,9 @@ public class PlayerDAO implements PlayerDataAccessInterface {
         String baseUrl = "https://api.spotify.com/v1/me/player/volume";
 
         HttpUrl.Builder urlBuilder = HttpUrl.parse(baseUrl).newBuilder();
-        urlBuilder.addQueryParameter("device_id", deviceId);
         urlBuilder.addQueryParameter("volume_percent", String.valueOf(volume));
 
-        makePostCall(authorization, urlBuilder);
+        makePutCall(authorization, deviceId, urlBuilder.toString());
     }
 
     @Override
@@ -143,10 +144,9 @@ public class PlayerDAO implements PlayerDataAccessInterface {
         String baseUrl = "https://api.spotify.com/v1/me/player/shuffle";
 
         HttpUrl.Builder urlBuilder = HttpUrl.parse(baseUrl).newBuilder();
-        urlBuilder.addQueryParameter("device_id", deviceId);
         urlBuilder.addQueryParameter("state", String.valueOf(state));
 
-        makePostCall(authorization, urlBuilder);
+        makePutCall(authorization, deviceId, urlBuilder.toString());
     }
 
     @Override
