@@ -4,10 +4,14 @@ import data_access.Token;
 
 public class GetTokenInputData {
     final private String token;
+    final private Authorization auth;
 
     public GetTokenInputData (String token, Authorization auth) {
         this.token = token;
+        this.auth = auth;
     }
 
-    String getToken() { return token; }
+    public String getToken() { return token; }
+
+    public Authorization getAuth() { return auth; }
 }
