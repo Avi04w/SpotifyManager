@@ -9,13 +9,14 @@ import data_access.Authorization;
 import data_access.Token;
 import data_access.TokenDAO;
 import use_case.get_token.GetTokenPresenter;
+import use_case.get_token.GetTokenViewInterface;
 
-public class SpotifyGetTokenGUI extends JFrame {
+public class SpotifyGetTokenGUI extends JFrame implements GetTokenViewInterface {
     private final JTextField tokenField;
 
     public SpotifyGetTokenGUI(Authorization auth) {
         //Create presenter and DAO
-        GetTokenPresenter presenter = new GetTokenPresenter();
+        GetTokenPresenter presenter = new GetTokenPresenter(SpotifyGetTokenGUI.this);
         TokenDAO tokenDAO = new TokenDAO(presenter);
         presenter.setDAO(tokenDAO);
         //Set up then create and add components to the frame
@@ -72,14 +73,17 @@ public class SpotifyGetTokenGUI extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 String code = tokenField.getText();
 
-                //Validate token, presenter tells this what to do next by confirming whether execute was successful
-                if (presenter.execute(code, auth)) {
-                    SpotifyGetTokenGUI.this.setVisible(false);
-                } else {
-                    JOptionPane.showMessageDialog(SpotifyGetTokenGUI.this, "Invalid token. Try again.");
-                }
+                presenter.execute(code, auth);
             }
         });
+    }
+
+    public void success() {
+        SpotifyGetTokenGUI.this.setVisible(false);
+    }
+
+    public void failure() {
+        JOptionPane.showMessageDialog(SpotifyGetTokenGUI.this, "Invalid token. Try again.");
     }
 
     public static void main(String[] args) {

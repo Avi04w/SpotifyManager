@@ -4,6 +4,8 @@ import data_access.Authorization;
 public interface GetTokenOutputBoundary {
     void prepareSuccessView();
 
-    boolean execute(String token, Authorization auth);
+    void prepareFailView();
+
+    void execute(String token, Authorization auth);
 
 }
