@@ -1,4 +1,5 @@
 package use_case.get_token;
 
-public class GetTokenDataAccessInterface {
+public interface GetTokenDataAccessInterface {
+    boolean execute(GetTokenInputData getTokenInputData);
 }
