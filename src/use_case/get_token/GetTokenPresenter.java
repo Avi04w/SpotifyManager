@@ -1,6 +1,5 @@
 package use_case.get_token;
 
-import app.gui.SpotifyGetTokenGUI;
 import app.gui.SpotifyPlayerGUI;
 import data_access.Authorization;
 

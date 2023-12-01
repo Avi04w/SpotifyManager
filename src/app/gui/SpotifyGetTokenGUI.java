@@ -11,7 +11,7 @@ import data_access.TokenDAO;
 import use_case.get_token.GetTokenPresenter;
 
 public class SpotifyGetTokenGUI extends JFrame {
-    private JTextField tokenField;
+    private final JTextField tokenField;
 
     public SpotifyGetTokenGUI(Authorization auth) {
         //Create presenter and DAO

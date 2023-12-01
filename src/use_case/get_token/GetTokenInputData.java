@@ -1,6 +1,5 @@
 package use_case.get_token;
 import data_access.Authorization;
-import data_access.Token;
 
 public class GetTokenInputData {
     final private String token;
