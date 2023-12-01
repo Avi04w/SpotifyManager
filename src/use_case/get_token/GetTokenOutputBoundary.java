@@ -1,7 +1,12 @@
 package use_case.get_token;
 
-public interface GetTokenOutputBoundary {
-    void prepareSuccessView(GetTokenOutputData user);
+import app.gui.SpotifyGetTokenGUI;
+import app.gui.SpotifyLoginGUI;
+import data_access.Authorization;
 
-    void prepareFailView(String error);
+public interface GetTokenOutputBoundary {
+    void prepareSuccessView();
+
+    boolean execute(String token, Authorization auth);
+
 }
