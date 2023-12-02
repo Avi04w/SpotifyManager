@@ -8,4 +8,6 @@ import java.util.ArrayList;
 
 public interface PlayerInputBoundary {
     void resume(PlayerInputData playerInputData);
+
+    void pause(PlayerInputData playerInputData);
 }

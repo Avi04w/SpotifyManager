@@ -15,6 +15,7 @@ public class Config {
     private final PlayerDataAccessInterface playerDB = new PlayerDAO();
     private final AlbumDataAccessInterface albumDB = new AlbumDAO();
 
+
     public ArtistOutputData getArtistUseCase(Authorization authorization) {
         return new ArtistOutputData(authorization, artistDB);
     }

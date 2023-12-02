@@ -48,7 +48,7 @@ public class PlayerState {
     }
 
     public void setPlaying(boolean playing) {
-        isPlaying = playing;
+        this.isPlaying = playing;
     }
 
     public void setProgress(int progress) {

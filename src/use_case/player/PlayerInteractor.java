@@ -9,4 +9,8 @@ public class PlayerInteractor implements PlayerInputBoundary{
     public void resume(PlayerInputData playerInputData){
         playerDAO.resume(playerInputData.getAuthorization(), playerInputData.getDevice());
     }
+    @Override
+    public void pause(PlayerInputData playerInputData){
+        playerDAO.pause(playerInputData.getAuthorization(), playerInputData.getDevice());
+    }
 }

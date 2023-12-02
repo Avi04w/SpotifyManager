@@ -1,7 +1,8 @@
 package app.gui;
 
-import data_access.Authorization;
-import data_access.PlayerDAO;
+import interface_adapter.PlayerController;
+import interface_adapter.PlayerState;
+import interface_adapter.PlayerViewModel;
 
 import javax.swing.*;
 import java.awt.*;
@@ -15,8 +16,12 @@ public class SpotifyPlayerGUI extends JFrame {
     private JProgressBar progressBar;
     private JLabel songLabel;
     private JLabel songImage;
+    private final PlayerController playerController;
+    private final PlayerViewModel playerViewModel;
 
-    public SpotifyPlayerGUI() {
+    public SpotifyPlayerGUI(PlayerController playerController, PlayerViewModel playerViewModel) {
+        this.playerController = playerController;
+        this.playerViewModel = playerViewModel;
         setTitle("Spotify Player");
         setSize(400, 400);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -47,8 +52,8 @@ public class SpotifyPlayerGUI extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 // Play button action
                 if (e.getSource().equals(playButton)) {
-                    String device = PlayerDAO.getAvailableDevice(Authorization);
-                    PlayerDAO.resume(authorization, device);
+                    PlayerState playerState = SpotifyPlayerGUI.this.playerViewModel.getPlayerState();
+                    SpotifyPlayerGUI.this.playerController.resume(playerState.getAuthorization());
                 }
             }
         });
@@ -57,6 +62,10 @@ public class SpotifyPlayerGUI extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 // Pause button action
+                if (e.getSource().equals(playButton)) {
+                    PlayerState playerState = SpotifyPlayerGUI.this.playerViewModel.getPlayerState();
+                    SpotifyPlayerGUI.this.playerController.pause(playerState.getAuthorization());
+                }
             }
         });
 
@@ -68,10 +77,14 @@ public class SpotifyPlayerGUI extends JFrame {
         });
     }
 
+
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> {
-            SpotifyPlayerGUI playerGUI = new SpotifyPlayerGUI();
+
+            SpotifyPlayerGUI playerGUI = new SpotifyPlayerGUI(new PlayerController(), new PlayerViewModel());
             playerGUI.setVisible(true);
         });
     }
+
+
 }

@@ -6,13 +6,15 @@ public class Player {
     private final int progress;
     private final int volume;
     private boolean shuffle;
+    private String device;
 
-    public Player(boolean isPlaying, Track track, int progress, int volume, boolean shuffle) {
+    public Player(boolean isPlaying, Track track, int progress, int volume, boolean shuffle, String device) {
         this.isPlaying = isPlaying;
         this.track = track;
         this.progress = progress;
         this.volume = volume;
         this.shuffle = shuffle;
+        this.device = device;
     }
 
     public static PlayerBuilder builder() {
@@ -25,6 +27,7 @@ public class Player {
         private int progress;
         private int volume;
         private boolean shuffle;
+        private String device;
 
         PlayerBuilder() {
         }
@@ -53,9 +56,13 @@ public class Player {
             this.shuffle = shuffle;
             return this;
         }
+        public PlayerBuilder device(String device){
+            this.device = device;
+            return this;
+        }
 
         public Player build() {
-            return new Player(isPlaying, track, progress, volume, shuffle);
+            return new Player(isPlaying, track, progress, volume, shuffle, device);
         }
     }
 
@@ -78,6 +85,7 @@ public class Player {
     public boolean isShuffle() {
         return shuffle;
     }
+    public String getDevice() {return device; }
 
     @Override
     public String toString() {
@@ -87,6 +95,7 @@ public class Player {
                 ", progress=" + progress +
                 ", volume=" + volume +
                 ", shuffle=" + shuffle +
+                ", deviceID=" + device +
                 '}';
     }
 }

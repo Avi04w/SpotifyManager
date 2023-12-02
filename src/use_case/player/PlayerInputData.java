@@ -5,19 +5,16 @@ import data_access.Authorization;
 public class PlayerInputData {
     final private Authorization authorization;
     final private PlayerDataAccessInterface playerDB;
-    final private String device;
+    private String deviceId = "";
 
-//    public PlayerInputData(Authorization authorization, PlayerDataAccessInterface playerDB) {
-//        this.authorization = authorization;
-//        this.playerDB = playerDB;
-//    }
-    public PlayerInputData(Authorization authorization, PlayerDataAccessInterface playerDB, String device) {
+    public PlayerInputData(Authorization authorization, PlayerDataAccessInterface playerDB) {
         this.authorization = authorization;
         this.playerDB = playerDB;
-        this.device = device;
     }
-    public Authorization getAuthorization(){return authorization;}
-    public String getDevice(){return device;}
+
+    public Authorization getAuthorization() {return authorization;}
+    public void setDevice(String deviceId) {this.deviceId = deviceId;}
+    public String getDevice() {return deviceId;}
 
     public void pause(Authorization authorization, String deviceId){
         playerDB.pause(authorization, deviceId);
@@ -30,6 +27,9 @@ public class PlayerInputData {
     public void resume(Authorization authorization, String deviceId){
         playerDB.resume(authorization, deviceId);
     }
+//    public void resume(Authorization authorization){
+//        playerDB.resume(authorization, deviceId);
+//    }
 
     public void setVolume(Authorization authorization, int volume, String deviceId){
         playerDB.setVolume(authorization, volume, deviceId);
