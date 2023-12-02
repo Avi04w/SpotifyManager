@@ -5,11 +5,19 @@ import data_access.Authorization;
 public class PlayerInputData {
     final private Authorization authorization;
     final private PlayerDataAccessInterface playerDB;
+    final private String device;
 
-    public PlayerInputData(Authorization authorization, PlayerDataAccessInterface playerDB) {
+//    public PlayerInputData(Authorization authorization, PlayerDataAccessInterface playerDB) {
+//        this.authorization = authorization;
+//        this.playerDB = playerDB;
+//    }
+    public PlayerInputData(Authorization authorization, PlayerDataAccessInterface playerDB, String device) {
         this.authorization = authorization;
         this.playerDB = playerDB;
+        this.device = device;
     }
+    public Authorization getAuthorization(){return authorization;}
+    public String getDevice(){return device;}
 
     public void pause(Authorization authorization, String deviceId){
         playerDB.pause(authorization, deviceId);

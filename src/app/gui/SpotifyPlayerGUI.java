@@ -1,5 +1,8 @@
 package app.gui;
 
+import data_access.Authorization;
+import data_access.PlayerDAO;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -43,6 +46,10 @@ public class SpotifyPlayerGUI extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 // Play button action
+                if (e.getSource().equals(playButton)) {
+                    String device = PlayerDAO.getAvailableDevice(Authorization);
+                    PlayerDAO.resume(authorization, device);
+                }
             }
         });
 
