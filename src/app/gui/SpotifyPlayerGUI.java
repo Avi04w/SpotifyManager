@@ -2,6 +2,7 @@ package app.gui;
 
 import data_access.Authorization;
 import data_access.PlayerDAO;
+import interface_adapter.PlayerController;
 
 import javax.swing.*;
 import java.awt.*;
@@ -15,8 +16,9 @@ public class SpotifyPlayerGUI extends JFrame {
     private JProgressBar progressBar;
     private JLabel songLabel;
     private JLabel songImage;
+    private final PlayerController playerController;
 
-    public SpotifyPlayerGUI() {
+    public SpotifyPlayerGUI(PlayerController playerController) {
         setTitle("Spotify Player");
         setSize(400, 400);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -47,8 +49,7 @@ public class SpotifyPlayerGUI extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 // Play button action
                 if (e.getSource().equals(playButton)) {
-                    String device = PlayerDAO.getAvailableDevice(Authorization);
-                    PlayerDAO.resume(authorization, device);
+                    playerController.resume();
                 }
             }
         });
