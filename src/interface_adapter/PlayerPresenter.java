@@ -13,8 +13,9 @@ public class PlayerPresenter implements PlayerOutputBoundary {
     }
 
     @Override
-    public void prepareResumeSuccessView() {
+    public void prepareResumeSuccessView(PlayerOutputData response) {
         PlayerState playerState = playerViewModel1.getPlayerState();
+        playerState.setDeviceId(response.getDevice());
         playerState.setPlaying(true);
         this.playerViewModel1.setPlayerState(playerState);
         playerViewModel1.firePropertyChanged();

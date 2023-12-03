@@ -27,9 +27,6 @@ public class PlayerInputData {
     public void resume(Authorization authorization, String deviceId){
         playerDB.resume(authorization, deviceId);
     }
-//    public void resume(Authorization authorization){
-//        playerDB.resume(authorization, deviceId);
-//    }
 
     public void setVolume(Authorization authorization, int volume, String deviceId){
         playerDB.setVolume(authorization, volume, deviceId);
