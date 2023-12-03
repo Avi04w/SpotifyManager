@@ -22,8 +22,8 @@ public class GetTokenPresenter implements GetTokenOutputBoundary{
     }
 
     public void prepareSuccessView() {
-        PlayerView playerGUI = new PlayerView();
-        playerGUI.setVisible(true);
+        PlayerView playerView = new PlayerView();
+        playerView.setVisible(true);
         viewInterface.success();
     }
 

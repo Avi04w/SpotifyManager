@@ -11,16 +11,16 @@ import data_access.TokenDAO;
 import use_case.get_token.GetTokenPresenter;
 import use_case.get_token.GetTokenViewInterface;
 
-public class AccessCodeView extends JFrame implements GetTokenViewInterface {
+public class GetTokenView extends JFrame implements GetTokenViewInterface {
     private final JTextField tokenField;
 
-    public AccessCodeView(Authorization auth) {
+    public GetTokenView(Authorization auth) {
         //Create presenter and DAO
-        GetTokenPresenter presenter = new GetTokenPresenter(AccessCodeView.this);
+        GetTokenPresenter presenter = new GetTokenPresenter(GetTokenView.this);
         TokenDAO tokenDAO = new TokenDAO(presenter);
         presenter.setDAO(tokenDAO);
         //Set up then create and add components to the frame
-        //Details are like background colour and frame size are modified to look like the Login GUI, to add continuity to the design of the program
+        //Details are like background colour and frame size are modified to look like the Login View, to add continuity to the design of the program
         Color spotifyGreen = new Color(30, 215, 96);
         setTitle("Get Token");
         setSize(400, 200);
@@ -79,11 +79,11 @@ public class AccessCodeView extends JFrame implements GetTokenViewInterface {
     }
 
     public void success() {
-        AccessCodeView.this.setVisible(false);
+        GetTokenView.this.setVisible(false);
     }
 
     public void failure() {
-        JOptionPane.showMessageDialog(AccessCodeView.this, "Invalid token. Try again.");
+        JOptionPane.showMessageDialog(GetTokenView.this, "Invalid token. Try again.");
     }
 
     public static void main(String[] args) {
@@ -92,8 +92,8 @@ public class AccessCodeView extends JFrame implements GetTokenViewInterface {
         System.out.println(token.getAuthURI());
 
         SwingUtilities.invokeLater(() -> {
-            AccessCodeView getTokenGUI = new AccessCodeView(token);
-            getTokenGUI.setVisible(true);
+            GetTokenView getTokenView = new GetTokenView(token);
+            getTokenView.setVisible(true);
         });
     }
 }
