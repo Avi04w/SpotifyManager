@@ -17,8 +17,8 @@ public class TokenDAO implements GetTokenDataAccessInterface {
         String token = getTokenInputData.getToken();
         String result = getTokenInputData.getAuth().setAccessAndRefreshToken(token);
 
-        // If there is an error this will return false so that the GUI will know to send the user an error message.
-        // Otherwise, this tells the presenter to switch to the Player GUI.
+        // If there is an error this will tell the presenter send the user an error message.
+        // Otherwise, this tells the presenter to switch to the Player View.
         if (result.contains("Error: ")){
             getTokenPresenter.prepareFailView();
         } else {

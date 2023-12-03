@@ -62,8 +62,8 @@ public class PlayerView extends JFrame {
 
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> {
-            PlayerView playerGUI = new PlayerView();
-            playerGUI.setVisible(true);
+            PlayerView playerView = new PlayerView();
+            playerView.setVisible(true);
         });
     }
 }

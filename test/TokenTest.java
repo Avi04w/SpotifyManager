@@ -3,13 +3,13 @@ import data_access.Token;
 import static org.junit.Assert.*;
 
 public class TokenTest {
-    static String code = "AQCTX13ReiRUfDJ7_yS6K_tKA3QZjRbLAiQn2u2XEaJnRaQZbHh9wGvPLHFjdycBRfnCu128m8jAI12nDp77Q9Fd7NBlnO4rH-E0TPtOzJwEN00B9x3bmS5rgWG96gzfItbwg5s5zsZKnzuMxx2jkZrv38W7NK8xVYnM4lZCGVbtsNxLlDFy2EBNlqOyG1sc4VwvQo3wXQ_1fzGN4Uy-DDGMXzkSw757d8Lw3XYSCIXtkXqk6MuCUGXK7YrTHJecDpeHPbBwVPJWPJvmAokiqOx2HxRq3PJolLUhX1N8_pNj5H3woB_KEPhnkfyrxEQaGdwIL7CSu4nKAqi-D2xO-ck-dePTSFvKdiIckxv0EsTu-0RM7caWbt3ca33A9uOaY4a8ENQDrLfquH9H8KWHgHhjzIqoOK5bsnYIpvjpBN4aiSZiHzoco1UGR-Z4eMhzbN9aGDTVLR5V";
+    static String code = "AQDazq1jhZ7BvshaurxiKjeylshsHQvOt287ImJMyN9nqABCTcc5Nvg3keAN9u01CPo8kRi7vz1Q_URqyjXzVsPHFZZDQrLvJ4CnAfz4mXL5Mxo3zJJ7VM310QkEpr3QvUwFbiXXJ0mI9qAp2EEfitwVWsEIvaGWZclNvX1fyUuFffbQfyjQUBuPHtO7h33PTDHZScrT45r8EGX9zMTXIV8fwkKx2qPhqly6NJkGxCKQ48c-YzSII6BWUzqfUcq38lgcwO4AjdWNz3a8JFvobTBgicCaKMvru0zGg0YdNQaPEPH9m8jSdmg3i0hwnQRVOkaC36146VNNRtVsQpO0HKVnOIs2vfp1O6Qz_KTkNUx6f5-I8kfuV1PpTOKWWJvVLUBNlqViOtYpDT1vfw07VZCWQfd5HW2jDfWYCyF4iceyMP88bLIPgROypW3rPQqEUSgugxeRM7Lo";
     //CHANGE THIS EVERY TIME YOU RUN THIS TEST - GET NEW ONE BY RUNNING MAIN
     static Authorization token;
 
     @org.junit.BeforeClass
     public static void setSpotifyApiObject(){
-         token = new Token();
+        token = new Token();
     }
 
     @org.junit.Test
@@ -20,11 +20,6 @@ public class TokenTest {
 
     @org.junit.Test
     public void testSetToken() {
-        try{
-            token.setAccessAndRefreshToken(code);
-        } catch (RuntimeException e) {
-            fail("Error setting token.");
-        }
-
+        assert (token.setAccessAndRefreshToken(code).contains("Token Expires in: "));
     }
 }
