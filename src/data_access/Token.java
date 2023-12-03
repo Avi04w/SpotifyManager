@@ -30,7 +30,7 @@ public class Token implements Authorization{
           .show_dialog(true)
             .build();
 
-    public void setAccessAndRefreshToken(String code) {
+    public String setAccessAndRefreshToken(String code) {
         AuthorizationCodeRequest authorizationCodeRequest = spotifyApi.authorizationCode(code)
                 .build();
 
@@ -41,10 +41,10 @@ public class Token implements Authorization{
             spotifyApi.setAccessToken(authorizationCodeCredentials.getAccessToken());
             spotifyApi.setRefreshToken(authorizationCodeCredentials.getRefreshToken());
 
-            System.out.println("Token Expires in: " + authorizationCodeCredentials.getExpiresIn());
+            return ("Token Expires in: " + authorizationCodeCredentials.getExpiresIn());
 
         } catch (IOException | SpotifyWebApiException | ParseException e) {
-            System.out.println("Error: " + e.getMessage());
+            return ("Error: " + e.getMessage());
         }
     }
 
