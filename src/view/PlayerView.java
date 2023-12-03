@@ -1,5 +1,9 @@
 package view;
 
+import interface_adapter.PlayerController;
+import interface_adapter.PlayerState;
+import interface_adapter.PlayerViewModel;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -12,8 +16,12 @@ public class PlayerView extends JFrame {
     private JProgressBar progressBar;
     private JLabel songLabel;
     private JLabel songImage;
+    private final PlayerController playerController;
+    private final PlayerViewModel playerViewModel;
 
-    public PlayerView() {
+    public PlayerView(PlayerController playerController, PlayerViewModel playerViewModel) {
+        this.playerController = playerController;
+        this.playerViewModel = playerViewModel;
         setTitle("Spotify Player");
         setSize(400, 400);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -42,6 +50,10 @@ public class PlayerView extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 // Play button action
+                if (e.getSource().equals(playButton)) {
+                    PlayerState playerState = PlayerView.this.playerViewModel.getPlayerState();
+                    PlayerView.this.playerController.resume(playerState.getAuthorization(), playerState.getDeviceId());
+                }
             }
         });
 
@@ -49,6 +61,10 @@ public class PlayerView extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 // Pause button action
+                if (e.getSource().equals(playButton)) {
+                    PlayerState playerState = PlayerView.this.playerViewModel.getPlayerState();
+                    PlayerView.this.playerController.pause(playerState.getAuthorization());
+                }
             }
         });
 
@@ -62,8 +78,8 @@ public class PlayerView extends JFrame {
 
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> {
-            PlayerView playerView = new PlayerView();
-            playerView.setVisible(true);
+            PlayerView playerGUI = new PlayerView(new PlayerController(), new PlayerViewModel());
+            playerGUI.setVisible(true);
         });
     }
 }
