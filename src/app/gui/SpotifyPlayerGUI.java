@@ -52,8 +52,8 @@ public class SpotifyPlayerGUI extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 // Play button action
                 if (e.getSource().equals(playButton)) {
-                    PlayerState playerState = SpotifyPlayerGUI.this.playerViewModel.getPlayerState();
-                    SpotifyPlayerGUI.this.playerController.resume(playerState.getAuthorization());
+                    PlayerState playerState = playerViewModel.getPlayerState();
+                    playerController.resume(playerState.getAuthorization());
                 }
             }
         });
@@ -63,8 +63,8 @@ public class SpotifyPlayerGUI extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 // Pause button action
                 if (e.getSource().equals(playButton)) {
-                    PlayerState playerState = SpotifyPlayerGUI.this.playerViewModel.getPlayerState();
-                    SpotifyPlayerGUI.this.playerController.pause(playerState.getAuthorization());
+                    PlayerState playerState = playerViewModel.getPlayerState();
+                    playerController.pause(playerState.getAuthorization());
                 }
             }
         });
