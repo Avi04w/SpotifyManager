@@ -12,10 +12,11 @@ import use_case.player.PlayerDataAccessInterface;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Map;
 
 public class PlayerDAO implements PlayerDataAccessInterface {
     @Override
-    public Player getPlayer(Authorization authorization) {
+    public Player getPlayer(Authorization authorization) throws JSONException{
 
         String url = "https://api.spotify.com/v1/me/player";
 
@@ -57,12 +58,17 @@ public class PlayerDAO implements PlayerDataAccessInterface {
                         .uri(trackJSON.getString("uri"))
                         .build();
 
+                Map<String, String> devices = (Map<String, String>) responseBody.get("devices");
+                String deviceId = devices.get("id");
+                int volume = Integer.parseInt(devices.get("volume_percent"));
+
                 return Player.builder()
                         .isPlaying(responseBody.getBoolean("is_playing"))
                         .track(track)
                         .progress(responseBody.getInt("progress_ms"))
-                        .volume(responseBody.getJSONObject("device").getInt("volume_percent"))
+                        .volume(volume)
                         .shuffle(responseBody.getBoolean("shuffle_state"))
+                        .device(deviceId)
                         .build();
             } else {
                 throw new RuntimeException(responseBody.getJSONObject("error").getString("message"));
