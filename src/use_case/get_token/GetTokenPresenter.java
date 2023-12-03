@@ -1,6 +1,6 @@
 package use_case.get_token;
 
-import app.gui.SpotifyPlayerGUI;
+import view.PlayerView;
 import data_access.Authorization;
 
 public class GetTokenPresenter implements GetTokenOutputBoundary{
@@ -22,7 +22,7 @@ public class GetTokenPresenter implements GetTokenOutputBoundary{
     }
 
     public void prepareSuccessView() {
-        SpotifyPlayerGUI playerGUI = new SpotifyPlayerGUI();
+        PlayerView playerGUI = new PlayerView();
         playerGUI.setVisible(true);
         viewInterface.success();
     }
