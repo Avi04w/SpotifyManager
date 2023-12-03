@@ -1,5 +1,7 @@
 package use_case.get_token;
 
+import interface_adapter.PlayerController;
+import interface_adapter.PlayerViewModel;
 import view.PlayerView;
 import data_access.Authorization;
 
@@ -22,8 +24,8 @@ public class GetTokenPresenter implements GetTokenOutputBoundary{
     }
 
     public void prepareSuccessView() {
-        PlayerView playerGUI = new PlayerView();
-        playerGUI.setVisible(true);
+        PlayerView playerView = new PlayerView(new PlayerController(), new PlayerViewModel());
+        playerView.setVisible(true);
         viewInterface.success();
     }
 
