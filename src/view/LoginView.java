@@ -1,16 +1,16 @@
-package app.gui;
+package view;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class SpotifyLoginGUI extends JFrame {
+public class LoginView extends JFrame {
 
     private JTextField usernameField;
     private JPasswordField passwordField;
 
-    public SpotifyLoginGUI() {
+    public LoginView() {
         // Set up the frame
         setTitle("Spotify Login");
         setSize(400, 200);
@@ -80,9 +80,9 @@ public class SpotifyLoginGUI extends JFrame {
 
                 // Validate username and password
                 if ("yourUsername".equals(username) && "yourPassword".equals(new String(password))) {
-                    JOptionPane.showMessageDialog(SpotifyLoginGUI.this, "Login successful!");
+                    JOptionPane.showMessageDialog(LoginView.this, "Login successful!");
                 } else {
-                    JOptionPane.showMessageDialog(SpotifyLoginGUI.this, "Invalid username or password. Try again.");
+                    JOptionPane.showMessageDialog(LoginView.this, "Invalid username or password. Try again.");
                 }
 
                 // Clear fields after login attempt
@@ -96,7 +96,7 @@ public class SpotifyLoginGUI extends JFrame {
         SwingUtilities.invokeLater(new Runnable() {
             @Override
             public void run() {
-                new SpotifyLoginGUI().setVisible(true);
+                new LoginView().setVisible(true);
             }
         });
     }

@@ -1,11 +1,11 @@
-package app.gui;
+package view;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class SpotifyPlayerGUI extends JFrame {
+public class PlayerView extends JFrame {
     private JButton playButton;
     private JButton pauseButton;
     private JButton nextButton;
@@ -13,11 +13,10 @@ public class SpotifyPlayerGUI extends JFrame {
     private JLabel songLabel;
     private JLabel songImage;
 
-    public SpotifyPlayerGUI() {
+    public PlayerView() {
         setTitle("Spotify Player");
         setSize(400, 400);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
         // Create and add components to the frame
         JPanel controlPanel = new JPanel();
         playButton = new JButton("▶");
@@ -63,7 +62,7 @@ public class SpotifyPlayerGUI extends JFrame {
 
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> {
-            SpotifyPlayerGUI playerGUI = new SpotifyPlayerGUI();
+            PlayerView playerGUI = new PlayerView();
             playerGUI.setVisible(true);
         });
     }
