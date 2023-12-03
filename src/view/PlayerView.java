@@ -1,4 +1,4 @@
-package app.gui;
+package view;
 
 import interface_adapter.PlayerController;
 import interface_adapter.PlayerState;
@@ -9,7 +9,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class SpotifyPlayerGUI extends JFrame {
+public class PlayerView extends JFrame {
     private JButton playButton;
     private JButton pauseButton;
     private JButton nextButton;
@@ -19,13 +19,12 @@ public class SpotifyPlayerGUI extends JFrame {
     private final PlayerController playerController;
     private final PlayerViewModel playerViewModel;
 
-    public SpotifyPlayerGUI(PlayerController playerController, PlayerViewModel playerViewModel) {
+    public PlayerView(PlayerController playerController, PlayerViewModel playerViewModel) {
         this.playerController = playerController;
         this.playerViewModel = playerViewModel;
         setTitle("Spotify Player");
         setSize(400, 400);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
         // Create and add components to the frame
         JPanel controlPanel = new JPanel();
         playButton = new JButton("▶");
@@ -52,8 +51,8 @@ public class SpotifyPlayerGUI extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 // Play button action
                 if (e.getSource().equals(playButton)) {
-                    PlayerState playerState = playerViewModel.getPlayerState();
-                    playerController.resume(playerState.getAuthorization(), playerState.getDeviceId());
+                    PlayerState playerState = PlayerView.this.playerViewModel.getPlayerState();
+                    PlayerView.this.playerController.resume(playerState.getAuthorization(), playerState.getDeviceId());
                 }
             }
         });
@@ -63,8 +62,8 @@ public class SpotifyPlayerGUI extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 // Pause button action
                 if (e.getSource().equals(playButton)) {
-                    PlayerState playerState = playerViewModel.getPlayerState();
-                    playerController.pause(playerState.getAuthorization());
+                    PlayerState playerState = PlayerView.this.playerViewModel.getPlayerState();
+                    PlayerView.this.playerController.pause(playerState.getAuthorization());
                 }
             }
         });
@@ -77,11 +76,9 @@ public class SpotifyPlayerGUI extends JFrame {
         });
     }
 
-
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> {
-
-            SpotifyPlayerGUI playerGUI = new SpotifyPlayerGUI(new PlayerController(), new PlayerViewModel());
+            PlayerView playerGUI = new PlayerView(new PlayerController(), new PlayerViewModel());
             playerGUI.setVisible(true);
         });
     }

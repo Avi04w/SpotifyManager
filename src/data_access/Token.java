@@ -43,7 +43,7 @@ public class Token implements Authorization{
 
             return ("Token Expires in: " + authorizationCodeCredentials.getExpiresIn());
 
-        } catch (IOException | SpotifyWebApiException | ParseException e){
+        } catch (IOException | SpotifyWebApiException | ParseException e) {
             return ("Error: " + e.getMessage());
         }
     }
