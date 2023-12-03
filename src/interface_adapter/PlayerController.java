@@ -88,4 +88,7 @@ public class PlayerController {
         PlayerInputData playerInputData = new PlayerInputData(authorization, playerDB);
         playerInteractor.resume(playerInputData);
     }
+
+    public void next(Authorization authorization) {
+    }
 }

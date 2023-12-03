@@ -72,6 +72,10 @@ public class PlayerView extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 // Next button action
+                if (e.getSource().equals(nextButton)){
+                    PlayerState playerState = PlayerView.this.playerViewModel.getPlayerState();
+                    PlayerView.this.playerController.next(playerState.getAuthorization());
+                }
             }
         });
     }
