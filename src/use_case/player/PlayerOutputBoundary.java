@@ -1,7 +1,7 @@
 package use_case.player;
 
 public interface PlayerOutputBoundary {
-    void prepareResumeSuccessView();
+    void prepareResumeSuccessView(PlayerOutputData player);
     void preparePauseSuccessView();
     void prepareFailView();
 }

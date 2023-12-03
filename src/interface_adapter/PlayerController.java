@@ -78,8 +78,9 @@ public class PlayerController {
     }
 
 
-    public void resume(Authorization authorization) {
+    public void resume(Authorization authorization, String deviceId) {
         PlayerInputData playerInputData = new PlayerInputData(authorization, playerDB);
+        playerInputData.setDevice(deviceId);
         playerInteractor.resume(playerInputData);
     }
 

@@ -53,7 +53,7 @@ public class SpotifyPlayerGUI extends JFrame {
                 // Play button action
                 if (e.getSource().equals(playButton)) {
                     PlayerState playerState = playerViewModel.getPlayerState();
-                    playerController.resume(playerState.getAuthorization());
+                    playerController.resume(playerState.getAuthorization(), playerState.getDeviceId());
                 }
             }
         });
