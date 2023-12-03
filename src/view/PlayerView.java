@@ -82,6 +82,4 @@ public class PlayerView extends JFrame {
             playerGUI.setVisible(true);
         });
     }
-
-
 }
