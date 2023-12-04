@@ -16,7 +16,7 @@ public class LoginView extends JFrame {
     public LoginView() {
         // Set up the frame
         setTitle("Spotify Login");
-        setSize(400, 200);
+        setSize(400, 250);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
         setResizable(false);
@@ -31,15 +31,25 @@ public class LoginView extends JFrame {
         title.setFont(new Font("Arial", Font.BOLD, 24));
         title.setForeground(Color.BLACK);
 
+        JLabel instructionsLabel = new JLabel("<html>Instructions:<br>"
+                + "1. Click Login<br>"
+                + "2. Authorize Spotify<br>"
+                + "3. Copy the code found in the URL<br>"
+                + "4. Paste it into the Access Code field that pops up.</html>");
+        instructionsLabel.setFont(new Font("Arial", Font.PLAIN, 16));
 
         JButton loginButton = new JButton("Login");
         loginButton.setBackground(new Color(30, 215, 96)); // Spotify Green
         loginButton.setForeground(Color.BLACK);
         loginButton.setFocusPainted(false);
+        loginButton.setFont(new Font("Arial", Font.PLAIN, 16)); // Adjust the font size
+        Dimension buttonSize = new Dimension(200, 30);
+        loginButton.setPreferredSize(buttonSize);
 
         // Set up layout
+        setLayout(new GridBagLayout());
         GridBagConstraints gbc = new GridBagConstraints();
-        gbc.insets = new Insets(5, 5, 5, 5);
+        gbc.insets = new Insets(10, 10, 10, 10);
 
         gbc.gridx = 0;
         gbc.gridy = 0;
@@ -47,11 +57,16 @@ public class LoginView extends JFrame {
         mainPanel.add(title, gbc);
 
         gbc.gridx = 0;
-        gbc.gridy = 3;
+        gbc.gridy = 1;
+        gbc.gridwidth = 0;
+        mainPanel.add(instructionsLabel, gbc);
+
+        gbc.gridx = 0;
+        gbc.gridy = 2;
         gbc.gridwidth = 2;
         mainPanel.add(loginButton, gbc);
 
-        // Set the main panel as the content pane of the JFrame
+//         Set the main panel as the content pane of the JFrame
         setContentPane(mainPanel);
 
         // Add action listener to the login button
@@ -86,9 +101,5 @@ public class LoginView extends JFrame {
     private void openGetTokenView(Authorization token) {
         GetTokenView getTokenView = new GetTokenView(token);
         getTokenView.setVisible(true);
-    }
-
-    public static void main(String[] args) {
-        SwingUtilities.invokeLater(() -> new LoginView().setVisible(true));
     }
 }

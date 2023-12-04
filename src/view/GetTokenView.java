@@ -6,18 +6,17 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import data_access.Authorization;
-import data_access.TokenDAO;
-import interface_adapter.GetTokenPresenter;
+import app.GetTokenFactory;
 import interface_adapter.GetTokenViewInterface;
+import use_case.get_token.GetTokenOutputBoundary;
 
 public class GetTokenView extends JFrame implements GetTokenViewInterface {
     private final JTextField tokenField;
 
     public GetTokenView(Authorization auth) {
-        //Create presenter and DAO
-        GetTokenPresenter presenter = new GetTokenPresenter(GetTokenView.this);
-        TokenDAO tokenDAO = new TokenDAO(presenter);
-        presenter.setDAO(tokenDAO);
+        //Create presenter with factory
+        GetTokenFactory factory = new GetTokenFactory();
+        GetTokenOutputBoundary presenter = factory.createPresenter(GetTokenView.this);
         //Set up then create and add components to the frame
         //Details are like background colour and frame size are modified to look like the Login View, to add continuity to the design of the program
         Color spotifyGreen = new Color(30, 215, 96);

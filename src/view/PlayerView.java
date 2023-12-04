@@ -19,6 +19,10 @@ public class PlayerView extends JFrame {
     private JButton pauseButton;
     private JButton nextButton;
     private JProgressBar progressBar;
+    private JButton previousButton; // New button for Previous
+    private JButton addToQueueButton; // New button for Add to Queue
+    private JButton shuffleButton; // New button for Shuffle
+
     private JLabel songLabel;
     private JLabel songImage;
     private PlayerViewModel playerViewModel;
@@ -26,6 +30,9 @@ public class PlayerView extends JFrame {
     private final PlayerOutputData playerOutputData;
     private final PlayerDAO playerDao;
     private String deviceId;
+    private boolean state;
+    private String trackName;
+    private String image;
 
     public PlayerView(PlayerViewModel playerViewModel, Authorization token) {
         this.playerViewModel = playerViewModel;
@@ -33,6 +40,8 @@ public class PlayerView extends JFrame {
         this.playerInputData = new PlayerInputData(token, playerDao);
         this.playerOutputData = new PlayerOutputData(token, playerDao);
         this.deviceId = playerOutputData.getAvailableDevice(token);
+        this.trackName = playerOutputData.getTrackName(token);
+        this.image = playerOutputData.getImage(token);
 
         setTitle("Spotify Player");
         setSize(400, 400);
@@ -42,8 +51,12 @@ public class PlayerView extends JFrame {
         playButton = new JButton("▶");
         pauseButton = new JButton("⏸");
         nextButton = new JButton("⏭");
+        previousButton = new JButton("⏮");
+        addToQueueButton = new JButton("Add to Queue");
+        shuffleButton = new JButton("Shuffle");
         progressBar = new JProgressBar();
-        songLabel = new JLabel("Now Playing: Song Title");
+//        songLabel = new JLabel("Now Playing: Song Title");
+        songLabel = new JLabel("Now Playing: " + trackName);
         songImage = new JLabel(new ImageIcon("song_image.jpg"));
         songImage.setPreferredSize(new Dimension(200, 200));
 
@@ -51,6 +64,9 @@ public class PlayerView extends JFrame {
         controlPanel.add(pauseButton);
         controlPanel.add(nextButton);
         controlPanel.add(progressBar);
+        controlPanel.add(previousButton);
+        controlPanel.add(addToQueueButton);
+        controlPanel.add(shuffleButton);
 
         setLayout(new BorderLayout());
         add(songLabel, BorderLayout.PAGE_START);
@@ -64,7 +80,7 @@ public class PlayerView extends JFrame {
                 System.out.println("Play");
                 System.out.println(deviceId);
                 playerInputData.resume(token, deviceId);
-                openPlayerTrackView(playerViewModel, token);
+                openPlayerView(playerViewModel, token);
                 dispose();
             }
         });
@@ -86,14 +102,46 @@ public class PlayerView extends JFrame {
 //                    PlayerState playerState = PlayerView.this.playerViewModel.getPlayerState();
                     playerInputData.skip(token, deviceId);
                 }
-                openPlayerTrackView(playerViewModel, token);
+                openPlayerView(playerViewModel, token);
+                dispose();
+            }
+        });
+        previousButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                // Previous button action
+                System.out.println("Previous");
+                PlayerState playerState = PlayerView.this.playerViewModel.getPlayerState();
+                playerInputData.previous(token, deviceId);
+                openPlayerView(playerViewModel, token);
+                dispose();
+            }
+
+        });
+        addToQueueButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                // Add to Queue button action
+                System.out.println("Add to Queue");
+                PlayerState playerState = PlayerView.this.playerViewModel.getPlayerState();
+                playerInputData.getQueue(token);
+            }
+        });
+        shuffleButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                // Shuffle button action
+                System.out.println("Shuffle");
+                PlayerState playerState = PlayerView.this.playerViewModel.getPlayerState();
+                playerInputData.toggleShuffle(token, state, deviceId);
+                openPlayerView(playerViewModel, token);
                 dispose();
             }
         });
     }
-    public void openPlayerTrackView(PlayerViewModel playerViewModel, Authorization token) {
-        PlayerTrackView playerTrackView = new PlayerTrackView(playerViewModel, token);
-        playerTrackView.setVisible(true);
+    public void openPlayerView(PlayerViewModel playerViewModel, Authorization token) {
+        PlayerView playerView = new PlayerView(playerViewModel, token);
+        playerView.setVisible(true);
     }
 
 }

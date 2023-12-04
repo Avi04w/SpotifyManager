@@ -2,28 +2,36 @@ import data_access.Authorization;
 import data_access.PlayerDAO;
 import data_access.Token;
 import entity.Track;
+import use_case.player.PlayerInputData;
+import use_case.player.PlayerOutputData;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 import static org.junit.Assert.*;
 
 public class PlayerTests {
-    static String code = "AQAajidT1CnCJAh0QX8ZjwiXlZhx6vCB76BpeOsmWMEaaQoNe4EVjcvQrwT-SLVn0tzZIooB23rZkM1fLWn8UnXFfO40Up23f6dEcEJzwM17aSGIdIg5d1QmsZofMGtVp0GG2cTrG3hygjazHxZwXZuJBl8plOHcqtXv40VNbrF2z3QwU0VH08rRCsU7gY7pRNIOByr14egA5tT14kT4cOvt0RgnQfOPDLIIC5d53mTTUA3RJ-IoP_UC1a0w6pISXEjFOtJt1mLuPPOaw7GY0iHi6UJD5Bi4-vjNh7B-3pfq-yoycWBeoAs-SO3goVSEsDiVY5QtDV9VXwC5rRvZzzAdwBfsNiz35Z7gKaXbjkNSQG6oYspxji3_nFQR3WWu_zlBXKdHadoKou2pTZzn51ik0h5ienlSPrcT3WdFG2pUP7cyPZvJ-oC3O7z60aawA4muzD8uCeCH";
+    static String code = "AQAKz1ySL9OwGvpi7RZvlBnPUkjobJpHUDX6aZw55-UOa30ogF6QdIbJii580vLc9SKHxIbqHax-rdRztjnL0QzhptS3lI4ImZ2lx6AfqX-ubadjxUQl2eXhORGtyN5HD9lxT0zTwDny1232sJFmPleZU6dXk_PeS-TC3nUdWi-TaIGDXxJWzzE3WDjtyK5dkNzOAUmURtLioIbCXFTOrP0ZjimnDDymyUBiiqsfEF5bfU7--E_e7_iCKCcuXLNupiUdEfN8KUmRQFsGrFWm8ppnadoVVwPE6SkaIdSc3SB2Q5G5W-1pTVjNEWtSM9QP-ZO95hyBf0f_uGPKRwLQmxuF3K1xINeJ1G1ZKFexqWnfFtqmnoYkLrTfxNhy5M0aM-UUwHAgWMZfm0bE7gx_YlMtXwZL0WxdhO1Lsdcv1jNsK3uN8bZKrjDvfUg58r9vSwGzuQxL4Iuo";
     //CHANGE THIS TIME YOU RUN THIS TEST - GET NEW ONE BY RUNNING MAIN
     static Authorization token = new Token();
     static PlayerDAO playerDao = new PlayerDAO();
+    static PlayerInputData playerInputData;
+    static PlayerOutputData playerOutputData;
     static String device = "c4c72f8f96e568165c2727ac6551bb31974c8883";
     //CURRENTLY SET TO AVI'S MACBOOK ID, CHANGE IT TO YOURS IF YOU WANT TO RUN THIS TEST
 
     @org.junit.BeforeClass()
     public static void setToken(){
         token.setAccessAndRefreshToken(code);
+        playerInputData = new PlayerInputData(token, playerDao);
+        playerOutputData = new PlayerOutputData(token, playerDao);
     }
 
     @org.junit.Test
     public void getAvailableDeviceTest(){
         try {
-            String deviceId = playerDao.getAvailableDevice(token);
+            String deviceId = playerOutputData.getAvailableDevice(token);
+            assertEquals(device, deviceId);
         }
         catch (RuntimeException e){
             fail("Error with getting available device.");
@@ -33,7 +41,7 @@ public class PlayerTests {
     @org.junit.Test
     public void getPlayerTest(){
         try {
-            String deviceId = playerDao.getAvailableDevice(token);
+            String deviceId = playerOutputData.getAvailableDevice(token);
         }
         catch (RuntimeException e){
             fail("Error with getting available device.");
@@ -43,7 +51,7 @@ public class PlayerTests {
     @org.junit.Test
     public void getQueueTest(){
         try {
-            ArrayList<Track> queue = playerDao.getQueue(token);
+            ArrayList<Track> queue = playerOutputData.getQueue(token);
         } catch (RuntimeException e) {
             fail("Error with getting queue");
         }
@@ -52,7 +60,7 @@ public class PlayerTests {
     @org.junit.Test
     public void resumeTest(){
         try {
-            playerDao.resume(token, device);
+            playerInputData.resume(token, device);
         } catch (RuntimeException e) {
             fail("Error with resuming playback");
         }
@@ -61,7 +69,7 @@ public class PlayerTests {
     @org.junit.Test
     public void pauseTest(){
         try {
-            playerDao.pause(token, device);
+            playerInputData.pause(token, device);
         } catch (RuntimeException e) {
             fail("Error with pausing playback");
         }
@@ -70,7 +78,7 @@ public class PlayerTests {
     @org.junit.Test
     public void skipTest(){
         try {
-            playerDao.skip(token, device);
+            playerInputData.skip(token, device);
         } catch (RuntimeException e) {
             fail("Error with skipping song");
         }
@@ -79,7 +87,7 @@ public class PlayerTests {
     @org.junit.Test
     public void previousTest(){
         try {
-            playerDao.previous(token, device);
+            playerInputData.previous(token, device);
         } catch (RuntimeException e) {
             fail("Error with going to previous song");
         }
@@ -88,16 +96,19 @@ public class PlayerTests {
     @org.junit.Test
     public void setVolumeTest(){
         try {
-            playerDao.setVolume(token, 10, device);
-            int playerVol = playerDao.getPlayer(token).getVolume();
+            playerInputData.setVolume(token, 10, device);
+
             try {
-                Thread.sleep(1000);
+                // Wait for 5 seconds (5000 milliseconds)
+                Thread.sleep(10000);
             } catch (InterruptedException e) {
                 Thread.currentThread().interrupt();
             }
+
+            int playerVol = playerOutputData.getPlayer(token).getVolume();
             assertEquals(10, playerVol);
         } catch (RuntimeException e) {
-            fail("Error with resume");
+            fail("Error with setting volume");
         }
     }
 
@@ -105,11 +116,17 @@ public class PlayerTests {
     public void toggleShuffleTest(){
         //TURN OFF TOGGLE BEFORE YOU RUN THIS TEST
         try {
-            playerDao.toggleShuffle(token, true, device);
-            boolean shuffle = playerDao.getPlayer(token).isShuffle();
+            playerInputData.toggleShuffle(token, true, device);
+
+            // Wait for 5 seconds (5000 milliseconds)
+            Thread.sleep(10000);
+
+            boolean shuffle = playerOutputData.getPlayer(token).isShuffle();
             assertTrue(shuffle);
         } catch (RuntimeException e) {
-            fail("Error with resume");
+            fail("Error with toggle");
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
         }
     }
 }

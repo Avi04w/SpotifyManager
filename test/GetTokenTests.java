@@ -1,6 +1,6 @@
+import app.GetTokenFactory;
 import data_access.Authorization;
 import data_access.Token;
-import data_access.TokenDAO;
 import org.junit.FixMethodOrder;
 import interface_adapter.GetTokenPresenter;
 import view.GetTokenView;
@@ -9,12 +9,11 @@ import org.junit.runners.*;
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class GetTokenTests {
     //The order is fixed because if testGoodCode is successful and is tested before testBadCode, testBadCode can start with an invisible view which makes it fail, since it tests to make sure that the view is not made invisible by the bad code
-    static String code = "AQAmyCyqu6VHe4T5TRO1WPb9TM6C08BdrMP23YsG1cpfjx4ATAKzq28ANnxqQj0LZutL14namh-c0_R6WJhxfXQdZyT4S05TV8tPqtXCf-6UhCIG_2RXpzIYuYTnnRs8xSKf01NxyyY4Q8Tc3nRQFOOR-Juts6pw32vNmodiI65rAtOP9ejoCk3cKFn52rGRFdwgaUYc1Zoq-sRUv4Ubwi_XS90Mu0Q5jq8Scr8U2MgJsnqAW0-MMuUJNL5duEH6L2YYpZkvmJTMtJI2JHXleJ1qgbqnbZIVp29dDefOiLJ-EIpUOEC7mc8soJ7i-5YuNzFT4NG9Jk_kMXBGGPzE4Q1NWSbtOXoXopaucUoL4N7gKEjjPCdmcKMDMHUFDW4eoC2msnyOAu8biUJO7UWKKXQGRuHqFFjB_nHeMqQf2KRb4rDhmeN64MAr0HwwI42Fbnu-Dh_a6iIF";
+    static String code = "AQB81yhPPBt3Hl5s-O4pGA7YfvE2gC_nHunt31ay4qH0WEczUJ5ak45esso8V152JXapABKQMXBDPRTPQzxhOSHFLy1mZ4s1emh16QlHNRe1UPHyn_-aaJcJij_U14TtgHg9or5wWLYXXJ6f87OvmsvxTgejNMuOvGJxsEMvvQKLaDzoPeTWdlBi5fJfLpNvFLXOwAzRw3imlvb1ipiMXP5GSAKG1gDUw5iuVgCOJ9vWfcYi3GdFBmTEtAiKT9I4LbIQiti5jpIEsJKges91s-RRMaiv1jsfJk6rXj9KqfcS6n30XwZUQ0SNHIv9-iEuqJHU0xJ5W9dMfpr-EvaV-RZl6UTU3n_8E4BQAOjqkgTiqQt4V7ORbNrA57SbVbXlwY80bQC_UmSVgtZ2U3bBkH4IeKPYggBSdHi16p9gzKMiexjmYpsmRQQj76V0XkQSMVMskNFd0URI";
     //CHANGE THIS EVERY TIME YOU RUN THIS TEST - GET NEW ONE BY RUNNING MAIN
     static Authorization token;
     static GetTokenView getTokenView;
     static GetTokenPresenter presenter;
-    static TokenDAO tokenDAO;
 
     @org.junit.BeforeClass
     public static void setSpotifyApiObject(){
@@ -25,9 +24,8 @@ public class GetTokenTests {
     public static void setGetTokenClasses(){
         getTokenView = new GetTokenView(token);
         getTokenView.setVisible(true);
-        presenter = new GetTokenPresenter(getTokenView);
-        tokenDAO = new TokenDAO(presenter);
-        presenter.setDAO(tokenDAO);
+        GetTokenFactory factory = new GetTokenFactory();
+        presenter = factory.createPresenter(getTokenView);
     }
 
     @org.junit.Test
