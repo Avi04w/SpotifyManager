@@ -32,8 +32,7 @@ public class PlayerView extends JFrame {
         this.playerDao = new PlayerDAO();
         this.playerInputData = new PlayerInputData(token, playerDao);
         this.playerOutputData = new PlayerOutputData(token, playerDao);
-
-        deviceId = playerOutputData.getDevice();
+        this.deviceId = playerOutputData.getAvailableDevice(token);
 
         setTitle("Spotify Player");
         setSize(400, 400);
@@ -60,28 +59,28 @@ public class PlayerView extends JFrame {
 
         // Add action listeners for buttons
         playButton.addActionListener(new ActionListener() {
-            @Override
             public void actionPerformed(ActionEvent e) {
-                // Play button action
-                deviceId = playerDao.getAvailableDevice(token);
-                playerDao.resume(token, deviceId);
+                //Play button action
+                System.out.println("Play");
+                System.out.println(deviceId);
+                playerInputData.resume(token, deviceId);
             }
         });
 
         pauseButton.addActionListener(new ActionListener() {
-            @Override
             public void actionPerformed(ActionEvent e) {
-                // Pause button action
-                deviceId = playerDao.getAvailableDevice(token);
-                playerDao.pause(token, deviceId);
+                //Pause button action
+                System.out.println("Pause");
+                System.out.println(deviceId);
+                playerInputData.pause(token, deviceId);
             }
         });
 
         nextButton.addActionListener(new ActionListener() {
-            @Override
             public void actionPerformed(ActionEvent e) {
                 // Next button action
                 if (e.getSource().equals(nextButton)){
+                    System.out.println("Skip");
                     PlayerState playerState = PlayerView.this.playerViewModel.getPlayerState();
                     playerInputData.skip(token, deviceId);
                 }
