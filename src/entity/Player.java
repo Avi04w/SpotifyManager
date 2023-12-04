@@ -23,6 +23,8 @@ public class Player {
         return new PlayerBuilder();
     }
 
+
+
     public static class PlayerBuilder {
         private boolean isPlaying;
         private Track track;
@@ -68,6 +70,11 @@ public class Player {
             return this;
         }
 
+        public PlayerBuilder repeat(String repeat){
+            this.repeat = repeat;
+            return this;
+        }
+
         public Player build() {
             return new Player(isPlaying, track, progress, volume, shuffle, device, repeat);
         }
@@ -94,6 +101,7 @@ public class Player {
         return shuffle;
     }
     public String getDevice() {return device; }
+
     public String getRepeat() {return repeat; }
 
     @Override
