@@ -187,6 +187,61 @@ public class PlayerDAO implements PlayerDataAccessInterface {
             throw new RuntimeException(e);
         }
     }
+    public Track getCurrentlyPlaying(Authorization authorization) {
+        String url = "https://api.spotify.com/v1/me/player/currently_playing";
+
+        OkHttpClient client = new OkHttpClient().newBuilder().build();
+        Request request = new Request.Builder()
+                .url(url)
+                .addHeader("Authorization", "Bearer " + authorization.getSpotifyApi().getAccessToken())
+                .build();
+        try {
+            Response response = client.newCall(request).execute();
+            JSONObject responseBody = new JSONObject(response.body().string());
+
+            if (response.code() == 200) {
+                JSONObject trackJSON = responseBody.getJSONObject("item");
+
+                JSONArray artistsJSON = trackJSON.getJSONArray("artists");
+                ArrayList<Artist> artists = new ArrayList<>();
+
+                for (int i = 0; i < artistsJSON.length(); i++){
+                    JSONObject artistJSON = artistsJSON.getJSONObject(i);
+
+                    String artistId = artistJSON.getString("id");
+                    artists.add(new ArtistDAO().getArtist(authorization, artistId));
+                }
+
+                JSONObject albumJSON = trackJSON.getJSONObject("album");
+                String albumId = albumJSON.getString("id");
+
+                Album album = new AlbumDAO().getAlbum(authorization, albumId);
+
+                Track track = Track.builder()
+                        .album(album)
+                        .artists(artists)
+                        .duration_ms(trackJSON.getInt("duration_ms"))
+                        .explicit(trackJSON.getBoolean("explicit"))
+                        .id(trackJSON.getString("id"))
+                        .name(trackJSON.getString("name"))
+                        .uri(trackJSON.getString("uri"))
+                        .build();
+
+                return track;
+
+            } else {
+                throw new RuntimeException(responseBody.getJSONObject("error").getString("message"));
+            }
+
+        } catch (IOException | JSONException e) {
+            throw new RuntimeException(e);
+        }
+    }
+    public void repeat(Authorization authorization, String deviceId) {
+        String baseUrl = "https://api.spotify.com/v1/me/player/repeat?state=track";
+        makePutCall(authorization, deviceId, baseUrl);
+
+    }
 
     private void makePostCall(Authorization authorization, HttpUrl.Builder urlBuilder) {
         String url = urlBuilder.build().toString();
