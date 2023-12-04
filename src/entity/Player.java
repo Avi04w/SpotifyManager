@@ -7,19 +7,23 @@ public class Player {
     private final int volume;
     private boolean shuffle;
     private String device;
+    private String repeat;
 
-    public Player(boolean isPlaying, Track track, int progress, int volume, boolean shuffle, String device) {
+    public Player(boolean isPlaying, Track track, int progress, int volume, boolean shuffle, String device, String repeat) {
         this.isPlaying = isPlaying;
         this.track = track;
         this.progress = progress;
         this.volume = volume;
         this.shuffle = shuffle;
         this.device = device;
+        this.repeat = repeat;
     }
 
     public static PlayerBuilder builder() {
         return new PlayerBuilder();
     }
+
+
 
     public static class PlayerBuilder {
         private boolean isPlaying;
@@ -28,6 +32,7 @@ public class Player {
         private int volume;
         private boolean shuffle;
         private String device;
+        private String repeat;
 
         PlayerBuilder() {
         }
@@ -61,8 +66,13 @@ public class Player {
             return this;
         }
 
+        public PlayerBuilder repeat(String repeat){
+            this.repeat = repeat;
+            return this;
+        }
+
         public Player build() {
-            return new Player(isPlaying, track, progress, volume, shuffle, device);
+            return new Player(isPlaying, track, progress, volume, shuffle, device, repeat);
         }
     }
 
@@ -86,6 +96,9 @@ public class Player {
         return shuffle;
     }
     public String getDevice() {return device; }
+    public String getRepeat() {
+        return repeat;
+    }
 
     @Override
     public String toString() {
