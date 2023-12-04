@@ -19,5 +19,5 @@ public interface PlayerDataAccessInterface {
 
     Track getCurrentlyPlaying(Authorization authorization);
 
-    void repeat(Authorization authorization, String deviceId);
+    void repeat(Authorization authorization, String deviceId, String repeat);
 }

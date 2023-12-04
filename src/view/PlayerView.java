@@ -164,11 +164,17 @@ public class PlayerView extends JFrame implements ChangeListener{
             public void actionPerformed(ActionEvent e) {
                 // Add to Queue button action
                 System.out.println("Repeat Mode");
-                playerInputData.repeat(token, deviceId);
+                String repeat = playerOutputData.getRepeat(token);
+                if (repeat.equals("context")){
+                    playerInputData.repeat(token, deviceId, "off");
+                } else {
+                    playerInputData.repeat(token, deviceId, "off");
+                }
                 openPlayerView(playerViewModel, token);
                 dispose();
             }
         });
+
         shuffleButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
