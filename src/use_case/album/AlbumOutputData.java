@@ -3,6 +3,7 @@ package use_case.album;
 import data_access.Authorization;
 import entity.Album;
 
+
 public class AlbumOutputData {
     private final AlbumDataAccessInterface albumDB;
     private final Authorization authorization;
@@ -16,4 +17,5 @@ public class AlbumOutputData {
         return albumDB.getAlbum(authorization, id);
     }
 }
+
 
