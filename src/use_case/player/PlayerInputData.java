@@ -39,6 +39,9 @@ public class PlayerInputData {
     public void toggleShuffle(Authorization authorization, boolean state, String deviceId){
         playerDB.toggleShuffle(authorization, state, deviceId);
     }
+    public void repeat(Authorization authorization, String deviceId){
+        playerDB.repeat(authorization, deviceId);
+    }
     public void getQueue(Authorization authorization){
         playerDB.getQueue(authorization);
     }

@@ -37,4 +37,7 @@ public class PlayerOutputData {
         Album currentAlbum = currentTrack.getAlbum();
         return currentAlbum.getImage();
     }
+    public boolean getShuffle(Authorization authorization) {
+        return playerDB.getPlayer(authorization).isShuffle();
+    }
 }

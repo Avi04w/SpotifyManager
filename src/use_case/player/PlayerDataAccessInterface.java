@@ -18,4 +18,6 @@ public interface PlayerDataAccessInterface {
     ArrayList<Track> getQueue(Authorization authorization);
 
     Track getCurrentlyPlaying(Authorization authorization);
+
+    void repeat(Authorization authorization, String deviceId);
 }

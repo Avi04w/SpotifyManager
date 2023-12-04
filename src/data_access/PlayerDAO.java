@@ -237,6 +237,11 @@ public class PlayerDAO implements PlayerDataAccessInterface {
             throw new RuntimeException(e);
         }
     }
+    public void repeat(Authorization authorization, String deviceId) {
+        String baseUrl = "https://api.spotify.com/v1/me/player/repeat?state=track";
+        makePutCall(authorization, deviceId, baseUrl);
+
+    }
 
     private void makePostCall(Authorization authorization, HttpUrl.Builder urlBuilder) {
         String url = urlBuilder.build().toString();
