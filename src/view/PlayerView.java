@@ -174,6 +174,7 @@ public class PlayerView extends JFrame implements ChangeListener{
             public void actionPerformed(ActionEvent e) {
                 // Shuffle button action
                 System.out.println("Shuffle");
+                state = playerOutputData.getShuffle(token);
                 if (state) {
                     playerInputData.toggleShuffle(token, false, deviceId);
                 } else {
@@ -191,7 +192,6 @@ public class PlayerView extends JFrame implements ChangeListener{
 
     @Override
     public void stateChanged(ChangeEvent e) {
-//        Authorization token = playerViewModel.getPlayerState().getAuthorization();
         playerInputData.setVolume(playerInputData.getAuthorization(), progressBar.getValue(), deviceId);
     }
 }
