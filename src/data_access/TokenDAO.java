@@ -22,7 +22,7 @@ public class TokenDAO implements GetTokenDataAccessInterface {
         if (result.contains("Error: ")){
             getTokenPresenter.prepareFailView();
         } else {
-            getTokenPresenter.prepareSuccessView();
+            getTokenPresenter.prepareSuccessView(getTokenInputData.getAuth());
         }
     }
 }

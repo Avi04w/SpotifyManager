@@ -6,10 +6,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import data_access.Authorization;
-import data_access.Token;
 import data_access.TokenDAO;
-import use_case.get_token.GetTokenPresenter;
-import use_case.get_token.GetTokenViewInterface;
+import interface_adapter.GetTokenPresenter;
+import interface_adapter.GetTokenViewInterface;
 
 public class GetTokenView extends JFrame implements GetTokenViewInterface {
     private final JTextField tokenField;
@@ -36,7 +35,7 @@ public class GetTokenView extends JFrame implements GetTokenViewInterface {
         title.setFont(new Font("Arial", Font.BOLD, 24));
         title.setForeground(Color.BLACK);
 
-        JLabel tokenLabel = new JLabel("Token:");
+        JLabel tokenLabel = new JLabel("Access Code:");
         tokenField = new JTextField(20);
 
         JButton enterButton = new JButton("Enter");
@@ -84,16 +83,5 @@ public class GetTokenView extends JFrame implements GetTokenViewInterface {
 
     public void failure() {
         JOptionPane.showMessageDialog(GetTokenView.this, "Invalid token. Try again.");
-    }
-
-    public static void main(String[] args) {
-        Authorization token = new Token();
-
-        System.out.println(token.getAuthURI());
-
-        SwingUtilities.invokeLater(() -> {
-            GetTokenView getTokenView = new GetTokenView(token);
-            getTokenView.setVisible(true);
-        });
     }
 }

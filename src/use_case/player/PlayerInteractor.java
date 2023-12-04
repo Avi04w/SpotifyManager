@@ -1,7 +1,7 @@
 package use_case.player;
 
 
-public class PlayerInteractor implements PlayerInputBoundary{
+public class PlayerInteractor implements PlayerInputBoundary {
     final PlayerDataAccessInterface playerDAO;
     final PlayerOutputBoundary playerPresenter;
     public PlayerInteractor(PlayerDataAccessInterface playerDataAccessInterface, PlayerOutputBoundary playerOutputBoundary) {
