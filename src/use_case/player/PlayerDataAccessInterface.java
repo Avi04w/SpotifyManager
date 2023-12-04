@@ -16,4 +16,6 @@ public interface PlayerDataAccessInterface {
     void setVolume(Authorization authorization, int volume, String deviceId);
     void toggleShuffle(Authorization authorization, boolean state, String deviceId);
     ArrayList<Track> getQueue(Authorization authorization);
+
+    Track getCurrentlyPlaying(Authorization authorization);
 }

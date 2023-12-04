@@ -1,6 +1,7 @@
 package use_case.player;
 
 import data_access.Authorization;
+import entity.Album;
 import entity.Player;
 import entity.Track;
 
@@ -9,14 +10,11 @@ import java.util.ArrayList;
 public class PlayerOutputData {
     final private Authorization authorization;
     final private PlayerDataAccessInterface playerDB;
-    public String device = "";
 
     public PlayerOutputData(Authorization authorization, PlayerDataAccessInterface playerDB) {
         this.authorization = authorization;
         this.playerDB = playerDB;
     }
-    public String getDevice() {return device;}
-    public void setDevice(String device) {this.device = device;}
 
     public String getAvailableDevice(Authorization authorization){
         return playerDB.getAvailableDevice(authorization);
@@ -28,5 +26,15 @@ public class PlayerOutputData {
 
     public ArrayList<Track> getQueue(Authorization authorization){
         return playerDB.getQueue(authorization);
+    }
+    public Track getCurrentlyPlaying(Authorization authorization) { return playerDB.getCurrentlyPlaying(authorization); }
+    public String getTrackName(Authorization authorization) {
+        Track currentTrack = this.getCurrentlyPlaying(authorization);
+        return currentTrack.getName();
+    }
+    public String getImage(Authorization authorization) {
+        Track currentTrack = this.getCurrentlyPlaying(authorization);
+        Album currentAlbum = currentTrack.getAlbum();
+        return currentAlbum.getImage();
     }
 }
