@@ -65,6 +65,10 @@ public class Player {
             this.device = device;
             return this;
         }
+        public PlayerBuilder repeat(String repeat) {
+            this.repeat = repeat;
+            return this;
+        }
 
         public PlayerBuilder repeat(String repeat){
             this.repeat = repeat;
@@ -74,6 +78,7 @@ public class Player {
         public Player build() {
             return new Player(isPlaying, track, progress, volume, shuffle, device, repeat);
         }
+
     }
 
     public boolean isPlaying() {
@@ -96,9 +101,8 @@ public class Player {
         return shuffle;
     }
     public String getDevice() {return device; }
-    public String getRepeat() {
-        return repeat;
-    }
+
+    public String getRepeat() {return repeat; }
 
     @Override
     public String toString() {
@@ -109,6 +113,7 @@ public class Player {
                 ", volume=" + volume +
                 ", shuffle=" + shuffle +
                 ", deviceID=" + device +
+                ", repeat=" + repeat +
                 '}';
     }
 }
