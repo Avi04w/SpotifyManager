@@ -2,7 +2,7 @@ import data_access.Authorization;
 import data_access.Token;
 import data_access.TokenDAO;
 import org.junit.FixMethodOrder;
-import use_case.get_token.GetTokenPresenter;
+import interface_adapter.GetTokenPresenter;
 import view.GetTokenView;
 import org.junit.runners.*;
 
