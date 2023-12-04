@@ -2,9 +2,7 @@ package view;
 
 import data_access.Authorization;
 import data_access.PlayerDAO;
-import interface_adapter.PlayerState;
 import interface_adapter.PlayerViewModel;
-import use_case.player.PlayerDataAccessInterface;
 import use_case.player.PlayerInputData;
 import use_case.player.PlayerOutputData;
 
@@ -12,9 +10,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.IOException;
 
-public class PlayerView extends JFrame {
+public class PlayerTrackView extends JFrame {
     private JButton playButton;
     private JButton pauseButton;
     private JButton nextButton;
@@ -26,13 +23,17 @@ public class PlayerView extends JFrame {
     private final PlayerOutputData playerOutputData;
     private final PlayerDAO playerDao;
     private String deviceId;
+    private String trackName;
+    private String image;
 
-    public PlayerView(PlayerViewModel playerViewModel, Authorization token) {
+    public PlayerTrackView(PlayerViewModel playerViewModel, Authorization token) {
         this.playerViewModel = playerViewModel;
         this.playerDao = new PlayerDAO();
         this.playerInputData = new PlayerInputData(token, playerDao);
         this.playerOutputData = new PlayerOutputData(token, playerDao);
         this.deviceId = playerOutputData.getAvailableDevice(token);
+        this.trackName = playerOutputData.getTrackName(token);
+        this.image = playerOutputData.getImage(token);
 
         setTitle("Spotify Player");
         setSize(400, 400);
@@ -43,7 +44,7 @@ public class PlayerView extends JFrame {
         pauseButton = new JButton("⏸");
         nextButton = new JButton("⏭");
         progressBar = new JProgressBar();
-        songLabel = new JLabel("Now Playing: Song Title");
+        songLabel = new JLabel("Now Playing: " + trackName);
         songImage = new JLabel(new ImageIcon("song_image.jpg"));
         songImage.setPreferredSize(new Dimension(200, 200));
 
@@ -64,9 +65,7 @@ public class PlayerView extends JFrame {
                 System.out.println("Play");
                 System.out.println(deviceId);
                 playerInputData.resume(token, deviceId);
-                System.out.println(playerOutputData.getTrackName(token));
-                openPlayerTrackView(playerViewModel, token);
-                dispose();
+                System.out.println("kat sini");
             }
         });
 
@@ -84,16 +83,12 @@ public class PlayerView extends JFrame {
                 // Next button action
                 if (e.getSource().equals(nextButton)){
                     System.out.println("Skip");
-//                    PlayerState playerState = PlayerView.this.playerViewModel.getPlayerState();
+//                   PlayerState playerState = PlayerView.this.playerViewModel.getPlayerState();
                     playerInputData.skip(token, deviceId);
                 }
             }
         });
-
     }
-    public void openPlayerTrackView(PlayerViewModel playerViewModel, Authorization token) {
-        PlayerTrackView playerTrackView = new PlayerTrackView(playerViewModel, token);
-        playerTrackView.setVisible(true);
-    }
-
 }
+
+
