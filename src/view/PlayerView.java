@@ -4,6 +4,7 @@ import data_access.Authorization;
 import data_access.PlayerDAO;
 import interface_adapter.PlayerState;
 import interface_adapter.PlayerViewModel;
+import use_case.player.PlayerDataAccessInterface;
 import use_case.player.PlayerInputData;
 import use_case.player.PlayerOutputData;
 
@@ -11,6 +12,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 
 public class PlayerView extends JFrame {
     private JButton playButton;
@@ -61,10 +63,8 @@ public class PlayerView extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 // Play button action
-                if (e.getSource().equals(playButton)) {
-                    PlayerState playerState = PlayerView.this.playerViewModel.getPlayerState();
-                    playerInputData.resume(token, deviceId);
-                }
+                deviceId = playerDao.getAvailableDevice(token);
+                playerDao.resume(token, deviceId);
             }
         });
 
@@ -72,10 +72,8 @@ public class PlayerView extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 // Pause button action
-                if (e.getSource().equals(pauseButton)) {
-                    PlayerState playerState = PlayerView.this.playerViewModel.getPlayerState();
-                    playerInputData.pause(token, deviceId);
-                }
+                deviceId = playerDao.getAvailableDevice(token);
+                playerDao.pause(token, deviceId);
             }
         });
 
