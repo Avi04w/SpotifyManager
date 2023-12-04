@@ -2,6 +2,7 @@ package view;
 
 import data_access.Authorization;
 import data_access.PlayerDAO;
+import entity.Artist;
 import use_case.player.PlayerInputData;
 import use_case.player.PlayerOutputData;
 
@@ -13,6 +14,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.ArrayList;
 
 public class PlayerView extends JFrame implements ChangeListener{
     private JButton playButton;
@@ -25,6 +27,8 @@ public class PlayerView extends JFrame implements ChangeListener{
     private JButton shuffleButton; // New button for Shuffle
 
     private JLabel songLabel;
+    private JLabel artistLabel;
+    private JLabel albumLabel;
     private JLabel songImage;
     private final PlayerInputData playerInputData;
     private final PlayerOutputData playerOutputData;
@@ -32,6 +36,8 @@ public class PlayerView extends JFrame implements ChangeListener{
     private String deviceId;
     private boolean state;
     private String trackName;
+    private String artistName;
+    private String albumName;
     private String image;
 
     public PlayerView(Authorization token) {
@@ -41,6 +47,14 @@ public class PlayerView extends JFrame implements ChangeListener{
         this.deviceId = playerOutputData.getAvailableDevice(token);
         this.state = playerOutputData.getShuffle(token);
         this.trackName = playerOutputData.getTrackName(token);
+
+        ArrayList<Artist> artists = playerOutputData.getPlayer(token).getCurrentTrack().getArtists();
+        StringBuilder b = new StringBuilder();
+        for(Artist a : artists) {
+            b.append(a.toString()).append(" ");
+        }
+        this.artistName = b.toString();
+        this.albumName = playerOutputData.getPlayer(token).getCurrentTrack().getAlbum().getAlbumName();
         this.image = playerOutputData.getImage(token);
 
         setTitle("Spotify Player");
@@ -60,6 +74,8 @@ public class PlayerView extends JFrame implements ChangeListener{
 //        progressBar = new JSlider(JSlider.HORIZONTAL, 0, 100);
 //        songLabel = new JLabel("Now Playing: Song Title");
         songLabel = new JLabel("Now Playing: " + trackName);
+        artistLabel = new JLabel("Artist: " + artistName);
+        albumLabel = new JLabel("Album: " + albumName);
         songImage = new JLabel(new ImageIcon("song_image.jpg"));
 //        songImage.setPreferredSize(new Dimension(200, 200)); ▶️⏯⏹⏭⏮⏩⏪⏫🔀🔁
 
@@ -83,9 +99,10 @@ public class PlayerView extends JFrame implements ChangeListener{
 //        controlPanel.add(addToQueueButton);
         controlPanel.add(repeatButton);
         controlPanel.add(shuffleButton);
-
         setLayout(new BorderLayout());
-        add(songLabel, BorderLayout.PAGE_START);
+        add(songLabel, BorderLayout.CENTER);
+        add(artistLabel, BorderLayout.CENTER);
+        add(albumLabel, BorderLayout.CENTER);
         add(songImage, BorderLayout.CENTER);
         add(controlPanel, BorderLayout.PAGE_END);
 
