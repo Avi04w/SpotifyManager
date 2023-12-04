@@ -89,6 +89,6 @@ public class PlayerController {
         playerInteractor.resume(playerInputData);
     }
 
-    public void next(Authorization authorization) {
+    public void skip(Authorization authorization) {
     }
 }
