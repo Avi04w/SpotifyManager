@@ -70,13 +70,7 @@ public class Artist {
 
     @Override
     public String toString() {
-        return "Artist{" +
-                "displayName='" + name + '\'' +
-                ", id='" + id + '\'' +
-//                ", genres='" + Arrays.toString(genres) + '\'' +
-//                ", popularity=" + Integer.toString(popularity) + '\'' +
-                ", uri=" + uri +
-                '}';
+        return name;
     }
 
     public String getName() {
