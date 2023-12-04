@@ -65,10 +65,6 @@ public class Player {
             this.device = device;
             return this;
         }
-        public PlayerBuilder repeat(String repeat) {
-            this.repeat = repeat;
-            return this;
-        }
 
         public PlayerBuilder repeat(String repeat){
             this.repeat = repeat;
