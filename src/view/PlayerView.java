@@ -74,8 +74,11 @@ public class PlayerView extends JFrame implements ChangeListener{
 //        progressBar = new JSlider(JSlider.HORIZONTAL, 0, 100);
 //        songLabel = new JLabel("Now Playing: Song Title");
         songLabel = new JLabel("Now Playing: " + trackName);
+        songLabel.setFont(new Font("Courier New", Font.PLAIN, 18)); // Adjust the font size
         artistLabel = new JLabel("Artist: " + artistName);
+        artistLabel.setFont(new Font("Courier New", Font.PLAIN, 18)); // Adjust the font size
         albumLabel = new JLabel("Album: " + albumName);
+        albumLabel.setFont(new Font("Courier New", Font.PLAIN, 18)); // Adjust the font size
         songImage = new JLabel(new ImageIcon("song_image.jpg"));
 //        songImage.setPreferredSize(new Dimension(200, 200)); ▶️⏯⏹⏭⏮⏩⏪⏫🔀🔁
 
@@ -84,8 +87,9 @@ public class PlayerView extends JFrame implements ChangeListener{
         try {
             URL url = new URL(image);
             ImageIcon icon = new ImageIcon(url);
-            // Resize the image directly in the ImageIcon constructor
-            Image scaledImage = icon.getImage().getScaledInstance(350, 350, Image.SCALE_SMOOTH);
+            // Resize the image directly in the ImageIcon Constructor
+            Image scaledImage = icon.getImage().getScaledInstance(400, 400, Image.SCALE_SMOOTH);
+
             songImage.setIcon(new ImageIcon(scaledImage));
         } catch (MalformedURLException e) {
             System.out.println("No image can be displayed.");
@@ -100,9 +104,23 @@ public class PlayerView extends JFrame implements ChangeListener{
         controlPanel.add(repeatButton);
         controlPanel.add(shuffleButton);
         setLayout(new BorderLayout());
-        add(songLabel, BorderLayout.CENTER);
-        add(artistLabel, BorderLayout.CENTER);
-        add(albumLabel, BorderLayout.CENTER);
+
+        //Setting Label Components
+        JPanel labelsPanel = new JPanel();
+        labelsPanel.setLayout(new BoxLayout(labelsPanel, BoxLayout.PAGE_AXIS));
+        songLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+        artistLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+        albumLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+        int labelPadding = 10; // Adjust the padding as needed
+        songLabel.setBorder(BorderFactory.createEmptyBorder(labelPadding, 0, 0, 0));
+        artistLabel.setBorder(BorderFactory.createEmptyBorder(labelPadding, 0, 0, 0));
+        albumLabel.setBorder(BorderFactory.createEmptyBorder(labelPadding, 0, 0, 0));
+        labelsPanel.add(songLabel);
+        labelsPanel.add(artistLabel);
+        labelsPanel.add(albumLabel);
+
+        add(labelsPanel, BorderLayout.PAGE_START);
+
         add(songImage, BorderLayout.CENTER);
         add(controlPanel, BorderLayout.PAGE_END);
 
@@ -162,7 +180,7 @@ public class PlayerView extends JFrame implements ChangeListener{
         repeatButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                // Add to Queue button action
+                // repeat button action
                 System.out.println("Repeat Mode");
                 String repeat = playerOutputData.getRepeat(token);
                 if (repeat.equals("context")){
