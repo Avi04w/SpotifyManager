@@ -55,6 +55,7 @@ public class PlayerView extends JFrame implements ChangeListener{
         setTitle("Spotify Player");
         setSize(700, 700);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
         // Create and add components to the frame
         JPanel controlPanel = new JPanel();
         playButton = new JButton("▶");
@@ -64,7 +65,8 @@ public class PlayerView extends JFrame implements ChangeListener{
 //        addToQueueButton = new JButton("Add to Queue");
         repeatButton = new JButton("\uD83D\uDD01");
         shuffleButton = new JButton("\uD83D\uDD00");
-        progressBar = new JSlider();
+        progressBar = new JSlider(0, 100);
+//        progressBar = new JSlider(JSlider.HORIZONTAL, 0, 100);
 //        songLabel = new JLabel("Now Playing: Song Title");
         songLabel = new JLabel("Now Playing: " + trackName);
         songImage = new JLabel(new ImageIcon("song_image.jpg"));
@@ -112,7 +114,6 @@ public class PlayerView extends JFrame implements ChangeListener{
             public void actionPerformed(ActionEvent e) {
                 //Play button action
                 System.out.println("Play");
-                System.out.println(deviceId);
                 playerInputData.resume(token, deviceId);
                 openPlayerView(playerViewModel, token);
                 dispose();
@@ -123,7 +124,6 @@ public class PlayerView extends JFrame implements ChangeListener{
             public void actionPerformed(ActionEvent e) {
                 //Pause button action
                 System.out.println("Pause");
-                System.out.println(deviceId);
                 playerInputData.pause(token, deviceId);
             }
         });
@@ -133,7 +133,6 @@ public class PlayerView extends JFrame implements ChangeListener{
                 // Next button action
                 if (e.getSource().equals(nextButton)){
                     System.out.println("Skip");
-//                    PlayerState playerState = PlayerView.this.playerViewModel.getPlayerState();
                     playerInputData.skip(token, deviceId);
                 }
                 openPlayerView(playerViewModel, token);
@@ -145,7 +144,6 @@ public class PlayerView extends JFrame implements ChangeListener{
             public void actionPerformed(ActionEvent e) {
                 // Previous button action
                 System.out.println("Previous");
-//                PlayerState playerState = PlayerView.this.playerViewModel.getPlayerState();
                 playerInputData.previous(token, deviceId);
                 openPlayerView(playerViewModel, token);
                 dispose();
@@ -166,7 +164,6 @@ public class PlayerView extends JFrame implements ChangeListener{
             public void actionPerformed(ActionEvent e) {
                 // Add to Queue button action
                 System.out.println("Repeat Mode");
-                PlayerState playerState = PlayerView.this.playerViewModel.getPlayerState();
                 playerInputData.repeat(token, deviceId);
                 openPlayerView(playerViewModel, token);
                 dispose();
@@ -177,8 +174,7 @@ public class PlayerView extends JFrame implements ChangeListener{
             public void actionPerformed(ActionEvent e) {
                 // Shuffle button action
                 System.out.println("Shuffle");
-//                PlayerState playerState = PlayerView.this.playerViewModel.getPlayerState();
-                if (state == true) {
+                if (state) {
                     playerInputData.toggleShuffle(token, false, deviceId);
                 } else {
                     playerInputData.toggleShuffle(token, true, deviceId);
@@ -195,7 +191,7 @@ public class PlayerView extends JFrame implements ChangeListener{
 
     @Override
     public void stateChanged(ChangeEvent e) {
-        Authorization token = playerViewModel.getPlayerState().getAuthorization();
-        playerInputData.setVolume(token, progressBar.getValue(), deviceId);
+//        Authorization token = playerViewModel.getPlayerState().getAuthorization();
+        playerInputData.setVolume(playerInputData.getAuthorization(), progressBar.getValue(), deviceId);
     }
 }
