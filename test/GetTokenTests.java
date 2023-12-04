@@ -1,6 +1,6 @@
+import app.GetTokenFactory;
 import data_access.Authorization;
 import data_access.Token;
-import data_access.TokenDAO;
 import org.junit.FixMethodOrder;
 import interface_adapter.GetTokenPresenter;
 import view.GetTokenView;
@@ -14,7 +14,6 @@ public class GetTokenTests {
     static Authorization token;
     static GetTokenView getTokenView;
     static GetTokenPresenter presenter;
-    static TokenDAO tokenDAO;
 
     @org.junit.BeforeClass
     public static void setSpotifyApiObject(){
@@ -25,9 +24,8 @@ public class GetTokenTests {
     public static void setGetTokenClasses(){
         getTokenView = new GetTokenView(token);
         getTokenView.setVisible(true);
-        presenter = new GetTokenPresenter(getTokenView);
-        tokenDAO = new TokenDAO(presenter);
-        presenter.setDAO(tokenDAO);
+        GetTokenFactory factory = new GetTokenFactory();
+        presenter = factory.createPresenter(getTokenView);
     }
 
     @org.junit.Test
