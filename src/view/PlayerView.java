@@ -90,7 +90,6 @@ public class PlayerView extends JFrame {
                 dispose();
             }
         });
-
     }
     public void openPlayerTrackView(PlayerViewModel playerViewModel, Authorization token) {
         PlayerTrackView playerTrackView = new PlayerTrackView(playerViewModel, token);

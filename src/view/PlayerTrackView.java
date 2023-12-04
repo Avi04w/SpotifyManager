@@ -6,13 +6,10 @@ import interface_adapter.PlayerViewModel;
 import use_case.player.PlayerInputData;
 import use_case.player.PlayerOutputData;
 
-import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.image.BufferedImage;
-import java.io.File;
 
 public class PlayerTrackView extends JFrame {
     private JButton playButton;
@@ -50,8 +47,6 @@ public class PlayerTrackView extends JFrame {
         songLabel = new JLabel("Now Playing: " + trackName);
         songImage = new JLabel(new ImageIcon("song_image.jpg"));
         songImage.setPreferredSize(new Dimension(200, 200));
-
-
 
         controlPanel.add(playButton);
         controlPanel.add(pauseButton);
