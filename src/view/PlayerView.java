@@ -2,9 +2,6 @@ package view;
 
 import data_access.Authorization;
 import data_access.PlayerDAO;
-import interface_adapter.PlayerState;
-import interface_adapter.PlayerViewModel;
-import use_case.player.PlayerDataAccessInterface;
 import use_case.player.PlayerInputData;
 import use_case.player.PlayerOutputData;
 
@@ -14,10 +11,6 @@ import javax.swing.event.ChangeListener;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
 
@@ -33,7 +26,6 @@ public class PlayerView extends JFrame implements ChangeListener{
 
     private JLabel songLabel;
     private JLabel songImage;
-    private PlayerViewModel playerViewModel;
     private final PlayerInputData playerInputData;
     private final PlayerOutputData playerOutputData;
     private final PlayerDAO playerDao;
@@ -42,8 +34,7 @@ public class PlayerView extends JFrame implements ChangeListener{
     private String trackName;
     private String image;
 
-    public PlayerView(PlayerViewModel playerViewModel, Authorization token) {
-        this.playerViewModel = playerViewModel;
+    public PlayerView(Authorization token) {
         this.playerDao = new PlayerDAO();
         this.playerInputData = new PlayerInputData(token, playerDao);
         this.playerOutputData = new PlayerOutputData(token, playerDao);
@@ -76,20 +67,12 @@ public class PlayerView extends JFrame implements ChangeListener{
         //Display image
         try{
             URL url = new URL(image);
-            InputStream is = url.openStream();
-            FileOutputStream fo = new FileOutputStream(new String("image.jpg"));
-            int b = 0;
-            while ((b = is.read()) != -1) {
-                fo.write(b);
-            }
-            fo.close();
-            is.close();
-            songImage.setIcon(new ImageIcon("image.jpg"));
+            ImageIcon icon;
+            icon = new ImageIcon(url);
+            songImage.setIcon(icon);
             songImage.setPreferredSize(new Dimension(100, 100));
         } catch (MalformedURLException e) {
             System.out.println("No image can be displayed.");
-        } catch (IOException e) {
-            throw new RuntimeException(e);
         }
 
         controlPanel.add(playButton);
@@ -115,7 +98,7 @@ public class PlayerView extends JFrame implements ChangeListener{
                 //Play button action
                 System.out.println("Play");
                 playerInputData.resume(token, deviceId);
-                openPlayerView(playerViewModel, token);
+                openPlayerView(token);
                 dispose();
             }
         });
@@ -135,7 +118,7 @@ public class PlayerView extends JFrame implements ChangeListener{
                     System.out.println("Skip");
                     playerInputData.skip(token, deviceId);
                 }
-                openPlayerView(playerViewModel, token);
+                openPlayerView(token);
                 dispose();
             }
         });
@@ -145,7 +128,7 @@ public class PlayerView extends JFrame implements ChangeListener{
                 // Previous button action
                 System.out.println("Previous");
                 playerInputData.previous(token, deviceId);
-                openPlayerView(playerViewModel, token);
+                openPlayerView(token);
                 dispose();
             }
 
@@ -165,7 +148,7 @@ public class PlayerView extends JFrame implements ChangeListener{
                 // Add to Queue button action
                 System.out.println("Repeat Mode");
                 playerInputData.repeat(token, deviceId);
-                openPlayerView(playerViewModel, token);
+                openPlayerView(token);
                 dispose();
             }
         });
@@ -180,13 +163,13 @@ public class PlayerView extends JFrame implements ChangeListener{
                 } else {
                     playerInputData.toggleShuffle(token, true, deviceId);
                 }
-                openPlayerView(playerViewModel, token);
+                openPlayerView(token);
                 dispose();
             }
         });
     }
-    public void openPlayerView(PlayerViewModel playerViewModel, Authorization token) {
-        PlayerView playerView = new PlayerView(playerViewModel, token);
+    public void openPlayerView(Authorization token) {
+        PlayerView playerView = new PlayerView(token);
         playerView.setVisible(true);
     }
 
