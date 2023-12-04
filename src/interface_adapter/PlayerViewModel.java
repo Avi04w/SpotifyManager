@@ -1,5 +1,7 @@
 package interface_adapter;
 
+import data_access.Authorization;
+
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 
@@ -15,4 +17,5 @@ public class PlayerViewModel {
         support.addPropertyChangeListener(listener);
     }
     public PlayerState getPlayerState() {return playerState;}
+
 }

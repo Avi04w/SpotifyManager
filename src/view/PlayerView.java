@@ -9,6 +9,8 @@ import use_case.player.PlayerInputData;
 import use_case.player.PlayerOutputData;
 
 import javax.swing.*;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -19,11 +21,11 @@ import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
 
-public class PlayerView extends JFrame {
+public class PlayerView extends JFrame implements ChangeListener{
     private JButton playButton;
     private JButton pauseButton;
     private JButton nextButton;
-    private JProgressBar progressBar;
+    private JSlider progressBar;
     private JButton previousButton; // New button for Previous
 //    private JButton addToQueueButton; // New button for Add to Queue
     private JButton repeatButton;
@@ -51,7 +53,7 @@ public class PlayerView extends JFrame {
         this.image = playerOutputData.getImage(token);
 
         setTitle("Spotify Player");
-        setSize(400, 400);
+        setSize(700, 700);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         // Create and add components to the frame
         JPanel controlPanel = new JPanel();
@@ -62,12 +64,14 @@ public class PlayerView extends JFrame {
 //        addToQueueButton = new JButton("Add to Queue");
         repeatButton = new JButton("\uD83D\uDD01");
         shuffleButton = new JButton("\uD83D\uDD00");
-        progressBar = new JProgressBar();
+        progressBar = new JSlider();
 //        songLabel = new JLabel("Now Playing: Song Title");
         songLabel = new JLabel("Now Playing: " + trackName);
         songImage = new JLabel(new ImageIcon("song_image.jpg"));
 //        songImage.setPreferredSize(new Dimension(200, 200)); ▶️⏯⏹⏭⏮⏩⏪⏫🔀🔁
 
+
+        //Display image
         try{
             URL url = new URL(image);
             InputStream is = url.openStream();
@@ -99,6 +103,9 @@ public class PlayerView extends JFrame {
         add(songLabel, BorderLayout.PAGE_START);
         add(songImage, BorderLayout.CENTER);
         add(controlPanel, BorderLayout.PAGE_END);
+
+        // Control volume
+        progressBar.addChangeListener(this);
 
         // Add action listeners for buttons
         playButton.addActionListener(new ActionListener() {
@@ -186,4 +193,9 @@ public class PlayerView extends JFrame {
         playerView.setVisible(true);
     }
 
+    @Override
+    public void stateChanged(ChangeEvent e) {
+        Authorization token = playerViewModel.getPlayerState().getAuthorization();
+        playerInputData.setVolume(token, progressBar.getValue(), deviceId);
+    }
 }
