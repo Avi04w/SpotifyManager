@@ -7,7 +7,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
 
 public class GetEntityTests {
-    static String code = "AQAFTcISWsRsDAX62RK4EAgVj9Z6-oY-0iaO97onxlSQxBle-TxcN4YtesFl9Ejx9DyMdHizhw7ecOTHk8fybBxbEVpkTJ5gvxL53tS31sATqv0xtNHWwqJ0RXuBLNylw03tTsEJh3E1BDUPg41C4GN1TCuiWMT4BtDe-gltuUC203OdIpvlGcC_InMTlshdfbingiCWteU8Rm1-eaGeV8RQfUBJtUYiXPSMOHvv_IgO2pnKO5M_1HfrftEIUmo8Zi_AKboGG9BFc9b0jFQRLK51ANOS67DEmcJi2CACZJGJ6B25F1khn7hjuy7gIzL8gAyaj2hhUXgTofDiD2kBYQP1XN6cAgVOsjrU3lxevdReEkNsL9TZ-6ssyrFHBQbqmmOe0x5KJc_03i6oDcvxeH_P7SOH4GI_kPnAPzrYg1mfI-PC1hWICD6DegcmHImRq4BDEd6fRK4p";
+    static String code = "AQAKz1ySL9OwGvpi7RZvlBnPUkjobJpHUDX6aZw55-UOa30ogF6QdIbJii580vLc9SKHxIbqHax-rdRztjnL0QzhptS3lI4ImZ2lx6AfqX-ubadjxUQl2eXhORGtyN5HD9lxT0zTwDny1232sJFmPleZU6dXk_PeS-TC3nUdWi-TaIGDXxJWzzE3WDjtyK5dkNzOAUmURtLioIbCXFTOrP0ZjimnDDymyUBiiqsfEF5bfU7--E_e7_iCKCcuXLNupiUdEfN8KUmRQFsGrFWm8ppnadoVVwPE6SkaIdSc3SB2Q5G5W-1pTVjNEWtSM9QP-ZO95hyBf0f_uGPKRwLQmxuF3K1xINeJ1G1ZKFexqWnfFtqmnoYkLrTfxNhy5M0aM-UUwHAgWMZfm0bE7gx_YlMtXwZL0WxdhO1Lsdcv1jNsK3uN8bZKrjDvfUg58r9vSwGzuQxL4Iuo";
     //CHANGE THIS TIME YOU RUN THIS TEST - GET NEW ONE BY RUNNING MAIN
     static Authorization token = new Token();
     static ArtistDAO artistDao = new ArtistDAO();

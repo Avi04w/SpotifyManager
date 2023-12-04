@@ -58,9 +58,8 @@ public class PlayerDAO implements PlayerDataAccessInterface {
                         .uri(trackJSON.getString("uri"))
                         .build();
 
-                Map<String, String> devices = (Map<String, String>) responseBody.get("devices");
-                String deviceId = devices.get("id");
-                int volume = Integer.parseInt(devices.get("volume_percent"));
+                String deviceId = responseBody.getJSONObject("device").getString("id");
+                int volume = responseBody.getJSONObject("device").getInt("volume_percent");
 
                 return Player.builder()
                         .isPlaying(responseBody.getBoolean("is_playing"))
