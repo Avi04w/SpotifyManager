@@ -1,14 +1,17 @@
 package view;
 
+import data_access.Authorization;
+import data_access.Token;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
 
 public class LoginView extends JFrame {
-
-    private JTextField usernameField;
-    private JPasswordField passwordField;
 
     public LoginView() {
         // Set up the frame
@@ -28,11 +31,6 @@ public class LoginView extends JFrame {
         title.setFont(new Font("Arial", Font.BOLD, 24));
         title.setForeground(Color.BLACK);
 
-        JLabel usernameLabel = new JLabel("Username:");
-        JLabel passwordLabel = new JLabel("Password:");
-
-        usernameField = new JTextField(20);
-        passwordField = new JPasswordField(20);
 
         JButton loginButton = new JButton("Login");
         loginButton.setBackground(new Color(30, 215, 96)); // Spotify Green
@@ -48,20 +46,6 @@ public class LoginView extends JFrame {
         gbc.gridwidth = 2;
         mainPanel.add(title, gbc);
 
-        gbc.gridwidth = 1;
-        gbc.gridy = 1;
-        mainPanel.add(usernameLabel, gbc);
-
-        gbc.gridx = 1;
-        mainPanel.add(usernameField, gbc);
-
-        gbc.gridx = 0;
-        gbc.gridy = 2;
-        mainPanel.add(passwordLabel, gbc);
-
-        gbc.gridx = 1;
-        mainPanel.add(passwordField, gbc);
-
         gbc.gridx = 0;
         gbc.gridy = 3;
         gbc.gridwidth = 2;
@@ -74,30 +58,37 @@ public class LoginView extends JFrame {
         loginButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                // Add your authentication logic here
-                String username = usernameField.getText();
-                char[] password = passwordField.getPassword();
-
-                // Validate username and password
-                if ("yourUsername".equals(username) && "yourPassword".equals(new String(password))) {
-                    JOptionPane.showMessageDialog(LoginView.this, "Login successful!");
+                Authorization token = new Token();
+                URI uri;
+                try {
+                    uri = new URI(token.getAuthURI());
+                } catch (URISyntaxException ex) {
+                    throw new RuntimeException(ex);
+                }
+                if (Desktop.isDesktopSupported()) {
+                    Desktop desktop = Desktop.getDesktop();
+                    try {
+                        desktop.browse(uri);
+                    } catch (IOException ex) {
+                        throw new RuntimeException(ex);
+                    }
                 } else {
-                    JOptionPane.showMessageDialog(LoginView.this, "Invalid username or password. Try again.");
+                    System.out.println("Desktop is not supported.");
                 }
 
-                // Clear fields after login attempt
-                usernameField.setText("");
-                passwordField.setText("");
+                openGetTokenView(token);
+
+                dispose();
             }
         });
     }
 
+    private void openGetTokenView(Authorization token) {
+        GetTokenView getTokenView = new GetTokenView(token);
+        getTokenView.setVisible(true);
+    }
+
     public static void main(String[] args) {
-        SwingUtilities.invokeLater(new Runnable() {
-            @Override
-            public void run() {
-                new LoginView().setVisible(true);
-            }
-        });
+        SwingUtilities.invokeLater(() -> new LoginView().setVisible(true));
     }
 }

@@ -1,4 +1,4 @@
-package use_case.get_token;
+package interface_adapter;
 
 public interface GetTokenViewInterface {
     void success();

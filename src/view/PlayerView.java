@@ -1,8 +1,11 @@
 package view;
 
-import interface_adapter.PlayerController;
+import data_access.Authorization;
+import data_access.PlayerDAO;
 import interface_adapter.PlayerState;
 import interface_adapter.PlayerViewModel;
+import use_case.player.PlayerInputData;
+import use_case.player.PlayerOutputData;
 
 import javax.swing.*;
 import java.awt.*;
@@ -16,12 +19,20 @@ public class PlayerView extends JFrame {
     private JProgressBar progressBar;
     private JLabel songLabel;
     private JLabel songImage;
-    private final PlayerController playerController;
-    private final PlayerViewModel playerViewModel;
+    private PlayerViewModel playerViewModel;
+    private final PlayerInputData playerInputData;
+    private final PlayerOutputData playerOutputData;
+    private final PlayerDAO playerDao;
+    private String deviceId;
 
-    public PlayerView(PlayerController playerController, PlayerViewModel playerViewModel) {
-        this.playerController = playerController;
+    public PlayerView(PlayerViewModel playerViewModel, Authorization token) {
         this.playerViewModel = playerViewModel;
+        this.playerDao = new PlayerDAO();
+        this.playerInputData = new PlayerInputData(token, playerDao);
+        this.playerOutputData = new PlayerOutputData(token, playerDao);
+
+        deviceId = playerOutputData.getDevice();
+
         setTitle("Spotify Player");
         setSize(400, 400);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -52,7 +63,7 @@ public class PlayerView extends JFrame {
                 // Play button action
                 if (e.getSource().equals(playButton)) {
                     PlayerState playerState = PlayerView.this.playerViewModel.getPlayerState();
-                    PlayerView.this.playerController.resume(playerState.getAuthorization(), playerState.getDeviceId());
+                    playerInputData.resume(token, deviceId);
                 }
             }
         });
@@ -61,9 +72,9 @@ public class PlayerView extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 // Pause button action
-                if (e.getSource().equals(playButton)) {
+                if (e.getSource().equals(pauseButton)) {
                     PlayerState playerState = PlayerView.this.playerViewModel.getPlayerState();
-                    PlayerView.this.playerController.pause(playerState.getAuthorization());
+                    playerInputData.pause(token, deviceId);
                 }
             }
         });
@@ -74,16 +85,9 @@ public class PlayerView extends JFrame {
                 // Next button action
                 if (e.getSource().equals(nextButton)){
                     PlayerState playerState = PlayerView.this.playerViewModel.getPlayerState();
-                    PlayerView.this.playerController.skip(playerState.getAuthorization());
+                    playerInputData.skip(token, deviceId);
                 }
             }
-        });
-    }
-
-    public static void main(String[] args) {
-        SwingUtilities.invokeLater(() -> {
-            PlayerView playerGUI = new PlayerView(new PlayerController(), new PlayerViewModel());
-            playerGUI.setVisible(true);
         });
     }
 }

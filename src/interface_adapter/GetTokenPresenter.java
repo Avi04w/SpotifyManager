@@ -1,11 +1,12 @@
-package use_case.get_token;
+package interface_adapter;
 
-import interface_adapter.PlayerController;
-import interface_adapter.PlayerViewModel;
+import use_case.get_token.GetTokenDataAccessInterface;
+import use_case.get_token.GetTokenInputData;
+import use_case.get_token.GetTokenOutputBoundary;
 import view.PlayerView;
 import data_access.Authorization;
 
-public class GetTokenPresenter implements GetTokenOutputBoundary{
+public class GetTokenPresenter implements GetTokenOutputBoundary {
 
     private GetTokenDataAccessInterface getTokenDAO;
     private final GetTokenViewInterface viewInterface;
@@ -23,8 +24,8 @@ public class GetTokenPresenter implements GetTokenOutputBoundary{
         getTokenDAO.execute(getTokenInputData);
     }
 
-    public void prepareSuccessView() {
-        PlayerView playerView = new PlayerView(new PlayerController(), new PlayerViewModel());
+    public void prepareSuccessView(Authorization token) {
+        PlayerView playerView = new PlayerView(new PlayerViewModel(), token);
         playerView.setVisible(true);
         viewInterface.success();
     }
