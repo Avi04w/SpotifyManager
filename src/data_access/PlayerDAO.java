@@ -68,6 +68,7 @@ public class PlayerDAO implements PlayerDataAccessInterface {
                         .volume(volume)
                         .shuffle(responseBody.getBoolean("shuffle_state"))
                         .device(deviceId)
+                        .repeat(responseBody.getString("repeat_state"))
                         .build();
             } else {
                 throw new RuntimeException(responseBody.getJSONObject("error").getString("message"));
@@ -237,10 +238,9 @@ public class PlayerDAO implements PlayerDataAccessInterface {
             throw new RuntimeException(e);
         }
     }
-    public void repeat(Authorization authorization, String deviceId) {
-        String baseUrl = "https://api.spotify.com/v1/me/player/repeat?state=track";
+    public void repeat(Authorization authorization, String deviceId, String repeat) {
+        String baseUrl = "https://api.spotify.com/v1/me/player/repeat?state=" + repeat;
         makePutCall(authorization, deviceId, baseUrl);
-
     }
 
     private void makePostCall(Authorization authorization, HttpUrl.Builder urlBuilder) {
