@@ -65,12 +65,12 @@ public class PlayerView extends JFrame implements ChangeListener{
 
 
         //Display image
-        try{
+        try {
             URL url = new URL(image);
-            ImageIcon icon;
-            icon = new ImageIcon(url);
-            songImage.setIcon(icon);
-            songImage.setPreferredSize(new Dimension(100, 100));
+            ImageIcon icon = new ImageIcon(url);
+            // Resize the image directly in the ImageIcon constructor
+            Image scaledImage = icon.getImage().getScaledInstance(350, 350, Image.SCALE_SMOOTH);
+            songImage.setIcon(new ImageIcon(scaledImage));
         } catch (MalformedURLException e) {
             System.out.println("No image can be displayed.");
         }
