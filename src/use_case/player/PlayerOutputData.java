@@ -40,4 +40,8 @@ public class PlayerOutputData {
     public boolean getShuffle(Authorization authorization) {
         return playerDB.getPlayer(authorization).isShuffle();
     }
+
+    public String getRepeat(Authorization token) {
+        return playerDB.getPlayer(authorization).getRepeat();
+    }
 }

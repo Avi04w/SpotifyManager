@@ -147,11 +147,17 @@ public class PlayerView extends JFrame implements ChangeListener{
             public void actionPerformed(ActionEvent e) {
                 // Add to Queue button action
                 System.out.println("Repeat Mode");
-                playerInputData.repeat(token, deviceId);
+                String repeat = playerOutputData.getRepeat(token);
+                if (repeat.equals("context")){
+                    playerInputData.repeat(token, deviceId, "off");
+                } else {
+                    playerInputData.repeat(token, deviceId, "context");
+                }
                 openPlayerView(token);
                 dispose();
             }
         });
+
         shuffleButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -160,8 +166,10 @@ public class PlayerView extends JFrame implements ChangeListener{
                 state = playerOutputData.getShuffle(token);
                 if (state) {
                     playerInputData.toggleShuffle(token, false, deviceId);
+                    shuffleButton.setBackground(Color.GRAY);
                 } else {
                     playerInputData.toggleShuffle(token, true, deviceId);
+                    shuffleButton.setBackground(Color.darkGray);
                 }
                 openPlayerView(token);
                 dispose();
@@ -177,4 +185,5 @@ public class PlayerView extends JFrame implements ChangeListener{
     public void stateChanged(ChangeEvent e) {
         playerInputData.setVolume(playerInputData.getAuthorization(), progressBar.getValue(), deviceId);
     }
+
 }
