@@ -12,8 +12,8 @@ import java.io.IOException;
 import java.net.URI;
 
 public class Token implements Authorization{
-    private static final String clientId = "6d58318288544d5cbf5059b4b9ad367f";
-    private static final String clientSecret = "f33f5981237b4510b01de6167b019fa1";
+    private static final String clientId = "86c2fb155ea544b7b9a979c8be45f165";
+    private static final String clientSecret = "a7db6b8d55794d1e9dd345a4d12ab08e";
     private static final URI redirectUri = SpotifyHttpManager.makeUri("http://localhost:8888/callback");
 
     private static final SpotifyApi spotifyApi = new SpotifyApi.Builder()
