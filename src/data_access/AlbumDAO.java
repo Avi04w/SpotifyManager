@@ -15,6 +15,18 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 public class AlbumDAO implements AlbumDataAccessInterface {
+    /**
+     * Retrieves information about the album.
+     * The method sends a request to the Spotify API endpoint "https://api.spotify.com/v1/albums" using the
+     * provided authorization token. It processes the API response to construct and return an Album object
+     * containing information such as the Album name, ID, URI, Artists, type, image, and more.
+     *
+     * @param authorization The Authorization object containing the necessary access token for authentication.
+     * @param id The ID of the Album is used to get the Album correctly.
+     * @return An Album object representing the details of the album.
+     * @throws JSONException If there is an issue parsing the JSON response from the Spotify API.
+     * @throws RuntimeException If there is an issue with the Spotify API request/response or if the album cannot be retrieved.
+     */
     @Override
     public Album getAlbum(Authorization authorization, String id) throws JSONException {
 
@@ -36,15 +48,6 @@ public class AlbumDAO implements AlbumDataAccessInterface {
 
                 String image = responseBody.getJSONArray("images").getJSONObject(0).getString("url");
 
-                JSONArray tracksJSON = responseBody.getJSONObject("tracks").getJSONArray("items");
-                ArrayList<Track> tracks = new ArrayList<>();
-
-//                for (int i = 0; i < tracksJSON.length(); i++){
-//                    JSONObject trackJSON = tracksJSON.getJSONObject(i);
-//                    String trackId = trackJSON.getString("id");
-//                    tracks.add(new MongoTrackDB().getTrack(authorization, trackId));
-//                }
-
                 JSONArray genresJSON = responseBody.getJSONArray("genres");
                 ArrayList<String> genres = new ArrayList<>();
                 for (int i = 0; i < genresJSON.length(); i++){
@@ -59,7 +62,6 @@ public class AlbumDAO implements AlbumDataAccessInterface {
                         .type(responseBody.getString("album_type"))
                         .image(image)
                         .totalTracks(responseBody.getInt("total_tracks"))
-                        .tracks(tracks)
                         .genres(genres)
                         .popularity(responseBody.getInt("popularity"))
                         .build();

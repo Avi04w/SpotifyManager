@@ -97,10 +97,9 @@ public class PlayerView extends JFrame implements ChangeListener{
 
         controlPanel.add(playButton);
         controlPanel.add(pauseButton);
-        controlPanel.add(nextButton);
-        controlPanel.add(progressBar);
         controlPanel.add(previousButton);
-//        controlPanel.add(addToQueueButton);
+        controlPanel.add(progressBar);
+        controlPanel.add(nextButton);
         controlPanel.add(repeatButton);
         controlPanel.add(shuffleButton);
         setLayout(new BorderLayout());
