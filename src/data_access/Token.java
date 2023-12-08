@@ -30,6 +30,16 @@ public class Token implements Authorization{
           .show_dialog(true)
             .build();
 
+    /**
+     * Sets the access and refresh tokens in the associated SpotifyApi object based on the provided authorization code.
+     * Initiates an authorization code request to the Spotify API, retrieves the access and refresh tokens,
+     * and updates the SpotifyApi object accordingly.
+     *
+     * @param code The authorization code used to obtain access and refresh tokens.
+     * @return A message indicating the success or failure of the token retrieval process.
+     *         If successful, the message includes the expiration time of the access token.
+     *         If an error occurs, the message contains an error description.
+     */
     public String setAccessAndRefreshToken(String code) {
         AuthorizationCodeRequest authorizationCodeRequest = spotifyApi.authorizationCode(code)
                 .build();
@@ -48,11 +58,23 @@ public class Token implements Authorization{
         }
     }
 
+    /**
+     * Retrieves the authorization URI based on the configured authorization code request.
+     * Initiates an authorization code URI request to the Spotify API and returns the resulting URI as a string.
+     *
+     * @return A string representation of the authorization URI.
+     * @throws IOException If there is an issue executing the authorization code URI request.
+     */
     public String getAuthURI() {
         final URI uri = authorizationCodeUriRequest.execute();
         return uri.toString();
     }
 
+    /**
+     * Retrieves the associated SpotifyApi Object instance.
+     *
+     * @return The SpotifyApi instance associated with this object.
+     */
     public SpotifyApi getSpotifyApi() {
         return spotifyApi;
     }
