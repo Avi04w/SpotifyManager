@@ -12,7 +12,10 @@ import java.net.URI;
 import java.net.URISyntaxException;
 
 public class LoginView extends JFrame {
-
+    /**
+     * Constructs a LoginView frame for initiating the Spotify login process.
+     * Displays login instructions and provides a button to start the login flow.
+     */
     public LoginView() {
         // Set up the frame
         setTitle("Spotify Login");
@@ -98,6 +101,11 @@ public class LoginView extends JFrame {
         });
     }
 
+    /**
+     * Opens a GetTokenView to facilitate the input and retrieval of access tokens.
+     *
+     * @param token The Authorization object containing the Spotify API access token.
+     */
     private void openGetTokenView(Authorization token) {
         GetTokenView getTokenView = new GetTokenView(token);
         getTokenView.setVisible(true);

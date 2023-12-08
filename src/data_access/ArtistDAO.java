@@ -11,6 +11,17 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 public class ArtistDAO implements ArtistDataAccessInterface {
+    /**
+     * Retrieves information about a Spotify artist using the provided artist ID and authorization token.
+     * The method sends a GET request to the Spotify API's "artists" endpoint and parses the response
+     * to construct an Artist object representing the requested artist.
+     *
+     * @param authorization The Authorization object containing the Spotify API access token.
+     * @param id            The unique identifier (ID) of the Spotify artist.
+     * @return An Artist object containing information about the requested artist.
+     * @throws JSONException If there is an issue parsing the JSON response from the Spotify API.
+     * @throws RuntimeException If there is an issue with the HTTP request or if the API returns an error.
+     */
     @Override
     public Artist getArtist(Authorization authorization, String id) throws JSONException {
 
