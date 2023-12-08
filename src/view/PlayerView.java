@@ -40,6 +40,13 @@ public class PlayerView extends JFrame implements ChangeListener{
     private String albumName;
     private String image;
 
+    /**
+     * Constructs a PlayerView frame to display the Spotify player interface.
+     * Initializes the player state, retrieves information about the currently playing track,
+     * and sets up the UI components for controlling playback and displaying track details.
+     *
+     * @param token The Authorization object containing the Spotify API access token.
+     */
     public PlayerView(Authorization token) {
         this.playerDao = new PlayerDAO();
         this.playerInputData = new PlayerInputData(token, playerDao);
@@ -210,11 +217,23 @@ public class PlayerView extends JFrame implements ChangeListener{
             }
         });
     }
+
+    /**
+     * Opens a new PlayerView instance.
+     *
+     * @param token The Authorization object containing the Spotify API access token.
+     */
     public void openPlayerView(Authorization token) {
         PlayerView playerView = new PlayerView(token);
         playerView.setVisible(true);
     }
 
+    /**
+     * Called when the state of the volume slider changes.
+     * Sets the volume of the player based on the slider value.
+     *
+     * @param e The ChangeEvent representing the change in state.
+     */
     @Override
     public void stateChanged(ChangeEvent e) {
         playerInputData.setVolume(playerInputData.getAuthorization(), progressBar.getValue(), deviceId);
