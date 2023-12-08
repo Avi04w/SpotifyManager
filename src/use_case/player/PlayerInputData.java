@@ -5,44 +5,102 @@ import data_access.Authorization;
 public class PlayerInputData {
     final private Authorization authorization;
     final private PlayerDataAccessInterface playerDB;
-    private String deviceId = "";
 
     public PlayerInputData(Authorization authorization, PlayerDataAccessInterface playerDB) {
         this.authorization = authorization;
         this.playerDB = playerDB;
     }
 
-    public Authorization getAuthorization() {return authorization;}
-    public void setDevice(String deviceId) {this.deviceId = deviceId;}
-    public String getDevice() {return deviceId;}
+    /**
+     * Retrieves the Authorization object associated with this PlayerManager.
+     *
+     * @return The Authorization object.
+     */
+    public Authorization getAuthorization() {
+        return authorization;
+    }
 
-    public void pause(Authorization authorization, String deviceId){
+    /**
+     * Pauses playback on the specified device.
+     *
+     * @param authorization The Authorization object containing the Spotify API access token.
+     * @param deviceId       The ID of the device on which playback should be paused.
+     */
+    public void pause(Authorization authorization, String deviceId) {
         playerDB.pause(authorization, deviceId);
     }
 
-    public void previous(Authorization authorization, String deviceId){
+    /**
+     * Skips to the previous track on the specified device.
+     *
+     * @param authorization The Authorization object containing the Spotify API access token.
+     * @param deviceId       The ID of the device on which to skip to the previous track.
+     */
+    public void previous(Authorization authorization, String deviceId) {
         playerDB.previous(authorization, deviceId);
     }
 
-    public void resume(Authorization authorization, String deviceId){
+    /**
+     * Resumes playback on the specified device.
+     *
+     * @param authorization The Authorization object containing the Spotify API access token.
+     * @param deviceId       The ID of the device on which playback should be resumed.
+     */
+    public void resume(Authorization authorization, String deviceId) {
         playerDB.resume(authorization, deviceId);
     }
 
-    public void setVolume(Authorization authorization, int volume, String deviceId){
+    /**
+     * Sets the volume on the specified device.
+     *
+     * @param authorization The Authorization object containing the Spotify API access token.
+     * @param volume         The volume level to set (0 to 100).
+     * @param deviceId       The ID of the device on which to set the volume.
+     */
+    public void setVolume(Authorization authorization, int volume, String deviceId) {
         playerDB.setVolume(authorization, volume, deviceId);
     }
 
-    public void skip(Authorization authorization, String deviceId){
+    /**
+     * Skips to the next track on the specified device.
+     *
+     * @param authorization The Authorization object containing the Spotify API access token.
+     * @param deviceId       The ID of the device on which to skip to the next track.
+     */
+    public void skip(Authorization authorization, String deviceId) {
         playerDB.skip(authorization, deviceId);
     }
 
-    public void toggleShuffle(Authorization authorization, boolean state, String deviceId){
+    /**
+     * Toggles the shuffle mode on the specified device.
+     *
+     * @param authorization The Authorization object containing the Spotify API access token.
+     * @param state          The desired state of the shuffle mode (true for enabled, false for disabled).
+     * @param deviceId       The ID of the device on which to toggle shuffle mode.
+     */
+    public void toggleShuffle(Authorization authorization, boolean state, String deviceId) {
         playerDB.toggleShuffle(authorization, state, deviceId);
     }
-    public void repeat(Authorization authorization, String deviceId, String repeat){
+
+    /**
+     * Sets the repeat mode on the specified device.
+     *
+     * @param authorization The Authorization object containing the Spotify API access token.
+     * @param deviceId       The ID of the device on which to set the repeat mode.
+     * @param repeat         The desired repeat mode ("track", "context", or "off").
+     */
+    public void repeat(Authorization authorization, String deviceId, String repeat) {
         playerDB.repeat(authorization, deviceId, repeat);
     }
-    public void getQueue(Authorization authorization){
+
+    /**
+     * Retrieves the queue of tracks associated with the provided Authorization.
+     *
+     * @param authorization The Authorization object containing the Spotify API access token.
+     * @return An ArrayList of Track objects representing the track queue.
+     */
+    public void getQueue(Authorization authorization) {
         playerDB.getQueue(authorization);
     }
+
 }

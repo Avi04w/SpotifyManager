@@ -12,6 +12,14 @@ public class TokenDAO implements GetTokenDataAccessInterface {
         this.getTokenPresenter = getTokenOutputBoundary;
     }
 
+    /**
+     * Executes the token retrieval process based on the provided GetTokenInputData.
+     * Retrieves the access token from the input data, sets it in the associated Authorization object,
+     * and communicates the result to the presenter for further handling.
+     *
+     * @param getTokenInputData The input data containing the access token and associated Authorization object.
+     * @see GetTokenInputData
+     */
     @Override
     public void execute(GetTokenInputData getTokenInputData) {
         String token = getTokenInputData.getToken();

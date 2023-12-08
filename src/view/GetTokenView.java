@@ -13,6 +13,11 @@ import use_case.get_token.GetTokenOutputBoundary;
 public class GetTokenView extends JFrame implements GetTokenViewInterface {
     private final JTextField tokenField;
 
+    /**
+     * Creates a GetTokenView to facilitate the input and retrieval of access tokens.
+     *
+     * @param auth The Authorization object containing the Spotify API access token.
+     */
     public GetTokenView(Authorization auth) {
         //Create presenter with factory
         GetTokenFactory factory = new GetTokenFactory();
@@ -76,10 +81,18 @@ public class GetTokenView extends JFrame implements GetTokenViewInterface {
         });
     }
 
+    /**
+     * Handles the action to be taken upon successful token retrieval.
+     * Hides the GetTokenView frame.
+     */
     public void success() {
         GetTokenView.this.setVisible(false);
     }
 
+    /**
+     * Handles the action to be taken upon unsuccessful token retrieval.
+     * Displays an error message indicating an invalid token and prompts the user to try again.
+     */
     public void failure() {
         JOptionPane.showMessageDialog(GetTokenView.this, "Invalid token. Try again.");
     }
