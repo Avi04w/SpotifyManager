@@ -12,7 +12,14 @@ public class AlbumOutputData {
         this.albumDB = albumDB;
         this.authorization = authorization;
     }
-
+    /**
+     * Retrieves an album based on the provided identifier.
+     *
+     * @param id The unique identifier of the album to retrieve.
+     * @return The Album object representing the requested album.
+     * @see AlbumDataAccessInterface
+     * @see Authorization
+     */
     public Album getAlbum(String id) {
         return albumDB.getAlbum(authorization, id);
     }
